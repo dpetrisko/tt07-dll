@@ -11,7 +11,7 @@ project:
   tiles: "1x1"          # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2, 6x2 or 8x2
 
   # Your top module name must start with "tt_um_". Make it unique by including your github username:
-  top_module:  "tt_um_example"
+  top_module:  "tt_um_dpetrisko_ttdll"
   
   # List your project's source files here. Source files must be in ./src and you must list each source file separately, one per line:
   source_files:        
@@ -20,9 +20,9 @@ project:
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:
   # Inputs
-  ui[0]: ""
-  ui[1]: ""
-  ui[2]: ""
+  ui[0]: "p_tag_clk_i"
+  ui[1]: "p_tag_en_i"
+  ui[2]: "p_tag_data_i"
   ui[3]: ""
   ui[4]: ""
   ui[5]: ""
@@ -30,10 +30,10 @@ pinout:
   ui[7]: ""
 
   # Outputs
-  uo[0]: ""
-  uo[1]: ""
-  uo[2]: ""
-  uo[3]: ""
+  uo[0]: "p_tag_clk_o"
+  uo[1]: "p_clk0_o"
+  uo[2]: "p_clk90_o"
+  uo[3]: "p_clk180_o"
   uo[4]: ""
   uo[5]: ""
   uo[6]: ""
