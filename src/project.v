@@ -17,13 +17,12 @@ module tt_um_dpetrisko_ttdll (
 );
 
   //wire p_unused_0_i = ui_in[0];
-  wire p_unused_0_i = ui_in[0];
+  wire p_tag_clk_i = ui_in[0];
   //wire p_unused_1_i = ui_in[1];
-  wire p_tag_clk_i = ui_in[1];
+  wire p_tag_en_i = ui_in[1];
   //wire p_unused_2_i = ui_in[2];
-  wire p_tag_en_i = ui_in[2];
-  //wire p_unused_3_i = ui_in[3];
-  wire p_tag_data_i = ui_in[3];
+  wire p_tag_data_i = ui_in[2];
+  wire p_unused_3_i = ui_in[3];
   wire p_unused_4_i = ui_in[4];
   wire p_unused_5_i = ui_in[5];
   wire p_unused_6_i = ui_in[6];
