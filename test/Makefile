@@ -7,7 +7,6 @@ SRC_DIR = $(PWD)/../src
 TEST_DIR = $(PWD)/../test
 
 ifneq ($(GATES),yes)
-PATH := /gro/cad/verilator/v5.022/verilator/bin:$(PATH)
 SIM ?= verilator
 
 # RTL simulation:
