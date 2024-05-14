@@ -17,7 +17,6 @@ project:
   source_files:  
     - "basejump_stl/bsg_tag/bsg_tag_pkg.sv"
     - "basejump_stl/bsg_chip_pkg.sv"
-    - "
     - "project.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
