@@ -15,7 +15,7 @@ jobs:
 
       - name: Install verilator
         shell: bash
-        run: sudo apt-get update && sudo apt-get install -y git help2man perl python3 make autoconf g++ flex bison ccache && sudo apt-get install -y libunwind-dev libgoogle-perftools-dev numactl perl-doc && sudo apt-get -y install libfl2 && sudo apt-get install -y libfl-dev && sudo apt-get install -y zlibc zlib1g zlib1g-dev && git clone -b v5.024 verilator && cd verilator && autoconf && ./configure && make -j && sudo make install
+        run: sudo apt-get update && sudo apt-get install -y git help2man perl python3 make autoconf g++ flex bison ccache && sudo apt-get install -y libunwind-dev libgoogle-perftools-dev numactl perl-doc && sudo apt-get -y install libfl2 && sudo apt-get install -y libfl-dev && sudo apt-get install -y zlib1g zlib1g-dev && git clone -b v5.024 verilator && cd verilator && autoconf && ./configure && make -j && sudo make install
 
       # Set Python up and install cocotb
       - name: Setup python
