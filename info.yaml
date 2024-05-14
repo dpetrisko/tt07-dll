@@ -16,7 +16,17 @@ project:
   # List your project's source files here. Source files must be in ./src and you must list each source file separately, one per line:
   source_files:  
     - "basejump_stl/bsg_tag/bsg_tag_pkg.sv"
-    - "basejump_stl/bsg_chip_pkg.sv"
+    - "bsg_chip_pkg.sv"
+    - "basejump_stl/hard/sky_130/bsg_clk_gen/bsg_clk_gen_osc_v3.sv"
+    - "basejump_stl/hard/sky_130/bsg_clk_gen/bsg_rp_clk_gen_osc_unit_v3.sv"
+    - "basejump_stl/hard/sky_130/bsg_clk_gen/bsg_rp_clk_gen_osc_v3.sv"
+    - "basejump_stl/hard/sky_130/bsg_dmc/bsg_dmc_dly_line_v3.sv"
+    - "basejump_stl/hard/sky_130/bsg_dmc/bsg_rp_dly_line_v3.sv"
+    - "basejump_stl/hard/sky_130/bsg_misc/bsg_buf.sv"
+    - "basejump_stl/hard/sky_130/bsg_misc/bsg_clkbuf.sv"
+    - "basejump_stl/hard/sky_130/bsg_misc/bsg_mux.sv"
+    - "bsg_clk_dly_gen.sv"
+    - "bsg_lfsr_div30.sv"
     - "project.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
