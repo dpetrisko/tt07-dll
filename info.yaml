@@ -30,10 +30,10 @@ pinout:
   ui[7]: ""
 
   # Outputs
-  uo[0]: "p_tag_clk_o"
-  uo[1]: "p_clk0_o"
-  uo[2]: "p_clk90_o"
-  uo[3]: "p_clk180_o"
+  uo[0]: "p_clk0_o"
+  uo[1]: "p_clk90_o"
+  uo[2]: "p_tag_clk_o"
+  uo[3]: ""
   uo[4]: ""
   uo[5]: ""
   uo[6]: ""

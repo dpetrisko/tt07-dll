@@ -1,0 +1,17 @@
+
+// Lint waivers for Verilator
+// See https://www.veripool.org/projects/verilator/wiki/Manual-verilator#CONFIGURATION-FILES
+// for documentation.
+//
+// Important: This file must included *before* any other Verilog file is read.
+// Otherwise, only global waivers are applied, but not file-specific waivers.
+
+`verilator_config
+lint_off -rule PINCONNECTEMPTY
+
+lint_off -rule WIDTHEXPAND -file "*/bsg_tag_master.sv" -match "*'v_n'*"
+lint_off -rule WIDTHEXPAND -file "*/bsg_clk_gen_osc_v3.sv" -match "*'ctrl_rrr'*"
+lint_off -rule WIDTHEXPAND -file "*/bsg_strobe.sv" -match "*'C_r'*"
+
+lint_off -rule WIDTHCONCAT -file "*/bsg_reduce.sv"
+

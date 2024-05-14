@@ -1,0 +1,4 @@
+[submodule "src/basejump_stl"]
+    path = src/basejump_stl
+    url = https://github.com/bespoke-silicon-group/basejump_stl.git
+    branch = master
