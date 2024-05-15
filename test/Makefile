@@ -38,7 +38,7 @@ COMPILE_ARGS    += -I$(SRC_DIR)/basejump_stl/bsg_tag
 COMPILE_ARGS    += -DBSG_OSC_GRANULARITY=20
 
 PLUSARGS        += --trace
-PLUSARGS        += --trace-file=tb.vcd
+PLUSARGS        += --trace-file tb.vcd
 
 else
 
