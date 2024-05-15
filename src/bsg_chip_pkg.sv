@@ -7,6 +7,7 @@ package bsg_chip_pkg;
   localparam osc_ctl_width_gp = $clog2(osc_num_taps_gp);
   localparam osc_ds_width_gp = 2;
   localparam dly_num_taps_gp = 4;
+  localparam div_count_width_gp = 8;
 
   // number of clients for the whole system
   localparam tag_els_gp = 1024;

@@ -50,11 +50,14 @@ module tt_um_dpetrisko_ttdll (
   wire p_ds_reset_o;
   wire p_mon_reset_o;
 
-  wire p_ext_clk_o;
-  wire p_ext_reset_o;
-  wire p_tag_clk_o;
-  wire p_tag_en_o;
-  wire p_tag_data_o;
+  wire p_div_count_7_o;
+  wire p_div_count_6_o;
+  wire p_div_count_5_o;
+  wire p_div_count_4_o;
+  wire p_div_count_3_o;
+  wire p_div_count_2_o;
+  wire p_div_count_1_o;
+  wire p_div_count_0_o;
   bsg_clk_dly_gen top
    (.ext_clk_i(p_ext_clk_i)
     ,.ext_reset_i(p_ext_reset_i)
@@ -71,11 +74,15 @@ module tt_um_dpetrisko_ttdll (
     ,.ds_reset_o(p_ds_reset_o)
     ,.mon_reset_o(p_mon_reset_o)
 
-    ,.ext_clk_o(p_ext_clk_o)
-    ,.ext_reset_o(p_ext_reset_o)
-    ,.tag_clk_o(p_tag_clk_o)
-    ,.tag_en_o(p_tag_en_o)
-    ,.tag_data_o(p_tag_data_o)
+    ,.div_count_o({p_div_count_7_o
+                 ,p_div_count_6_o
+                 ,p_div_count_5_o
+                 ,p_div_count_4_o
+                 ,p_div_count_3_o
+                 ,p_div_count_2_o
+                 ,p_div_count_1_o
+                 ,p_div_count_0_o
+		 })
     );
 
   // All output pins must be assigned. If not used, assign to 0.
@@ -98,15 +105,21 @@ module tt_um_dpetrisko_ttdll (
   assign uo_out[7] = p_mon_reset_o;
 
   //assign uio_out[0] = 1'b0;
-  assign uio_out[0] = p_ext_clk_o;
+  assign uio_out[0] = p_div_count_0_o;
   //assign uio_out[1] = 1'b0;
-  assign uio_out[1] = p_ext_reset_o;
-  assign uio_out[2] = p_tag_clk_o;
-  assign uio_out[3] = p_tag_en_o;
-  assign uio_out[4] = p_tag_data_o;
-  assign uio_out[5] = 1'b0;
-  assign uio_out[6] = 1'b0;
-  assign uio_out[7] = 1'b0;
+  assign uio_out[1] = p_div_count_1_o;
+  //assign uio_out[2] = 1'b0;
+  assign uio_out[2] = p_div_count_2_o;
+  //assign uio_out[3] = 1'b0;
+  assign uio_out[3] = p_div_count_3_o;
+  //assign uio_out[4] = 1'b0;
+  assign uio_out[4] = p_div_count_4_o;
+  //assign uio_out[5] = 1'b0;
+  assign uio_out[5] = p_div_count_5_o;
+  //assign uio_out[6] = 1'b0;
+  assign uio_out[6] = p_div_count_6_o;
+  //assign uio_out[7] = 1'b0;
+  assign uio_out[7] = p_div_count_7_o;
 
   //assign uio_oe[0] = 1'b0;
   assign uio_oe[0] = 1'b1;
@@ -118,9 +131,12 @@ module tt_um_dpetrisko_ttdll (
   assign uio_oe[3] = 1'b1;
   //assign uio_oe[4] = 1'b0;
   assign uio_oe[4] = 1'b1;
-  assign uio_oe[5] = 1'b0;
-  assign uio_oe[6] = 1'b0;
-  assign uio_oe[7] = 1'b0;
+  //assign uio_oe[5] = 1'b0;
+  assign uio_oe[5] = 1'b1;
+  //assign uio_oe[6] = 1'b0;
+  assign uio_oe[6] = 1'b1;
+  //assign uio_oe[7] = 1'b0;
+  assign uio_oe[7] = 1'b1;
 
 endmodule
 

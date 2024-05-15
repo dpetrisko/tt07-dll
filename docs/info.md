@@ -9,7 +9,13 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Explain how your project works
+This is a test design for all-digital tunable, hierarchical and composable oscillation blocks. The base primitives are delay elements, delay rows, delay columns and control registers. Control registers determine which delay elememts are active at a given setting, increasing or decreasing the total period. We deomnstrate a clock generator and 90-degree delay line as potential applications for these elements. This design has been validated in TSMC-28 using commercial tools. This will be the first test of this design on open tools and and open PDK.
+
+For a clock generator there are an odd number of delay elements, which causes the total delay to act as half of a clock oscillation. This is a fairly simple ring oscillator design, although it is designed to be glitch-free upon frequency changes and have even steps between tuning frequencies. 
+
+For a 90-degree delay line (useful in DDR controllers among other things), we take two odd delay blocks equal in size. The output of the first block is the generated 90-degree clock. The output of the second block is a generated 180-degree clock. Now, 180-degrees is trivial phase to generate -- simply invert the input clock. We can compare the racing 180-degree clocks using a (intentionally) metastable register. If the dly180 > clkinv, then we reduce the dly latency. If the dly180 < clkinv, then we increase the dly latency. This will automatically tune dly90 due to the symmetry of the blocks.
+
+TODO: Images coming soon! 
 
 ## How to test
 
@@ -17,4 +23,5 @@ Explain how to use your project
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+Although the clock and delay period can be approximated by the counter outputs, an external oscilloscope is helpful for visualizing the clock and delay waveforms themselves, including phase and jitter.
+

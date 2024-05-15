@@ -52,11 +52,11 @@ pinout:
   uo[7]: "p_mon_reset_o"
 
   # Bidirectional pins
-  uio[0]: "p_ext_clk_o"
-  uio[1]: "p_ext_reset_o"
-  uio[2]: "p_tag_clk_o"
-  uio[3]: "p_tag_en_o"
-  uio[4]: "p_tag_data_o"
+  uio[0]: "p_tag_clk_o"
+  uio[1]: "p_tag_en_o"
+  uio[2]: "p_tag_data_o"
+  uio[3]: ""
+  uio[4]: ""
   uio[5]: ""
   uio[6]: ""
   uio[7]: ""

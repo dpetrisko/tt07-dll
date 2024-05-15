@@ -28,13 +28,17 @@ VERILOG_SOURCES += $(SRC_DIR)/bsg_lfsr_div30.sv
 VERILOG_SOURCES += $(SRC_DIR)/project.v
 
 COMPILE_ARGS    += -sv
-COMPILE_ARGS    += --timing
 COMPILE_ARGS    += --trace
+COMPILE_ARGS    += --trace-structs
+COMPILE_ARGS    += --timing
 COMPILE_ARGS    += -I$(SRC_DIR)
 COMPILE_ARGS    += -I$(SRC_DIR)/basejump_stl/bsg_clk_gen
 COMPILE_ARGS    += -I$(SRC_DIR)/basejump_stl/bsg_misc
 COMPILE_ARGS    += -I$(SRC_DIR)/basejump_stl/bsg_tag
 COMPILE_ARGS    += -DBSG_OSC_GRANULARITY=20
+
+PLUSARGS        += --trace
+PLUSARGS        += --trace-file=tb.vcd
 
 else
 
