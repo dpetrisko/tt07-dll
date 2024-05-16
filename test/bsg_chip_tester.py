@@ -15,15 +15,11 @@ from cocotb.utils import get_sim_time
 
 
 class BsgChipTester:
-    def __init__(self, pkg):
+    def __init__(self, pkg, clk, pinmap, tagmap):
         self.pin = BsgChipPinUtils(pkg)
-
-    # Register a pinmap and tagbus
-    async def register(self, clk, pinmap, tagmap):
-        await Combine(
-            cocotb.start_soon(self.pin.pinmap_register(pinmap)),
-            cocotb.start_soon(self.pin.tagmap_register(tagmap)),
-        )
+        self.pin.clock_register(clk),
+        self.pin.pinmap_register(pinmap),
+        self.pin.tagmap_register(tagmap),
 
     # Run a sequence produced by a sequencer
     async def run_gen(self, seq):

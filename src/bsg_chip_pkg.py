@@ -128,7 +128,7 @@ class BsgChipPkg:
                 yield from self.gen_params(f)
 
     def gen_clients(self, client):
-        for a, f in client.__dict__.items():
+        for a, f in reversed(client.__dict__.items()):
             # Skip builtin
             if "__" in a:
                 continue
@@ -139,7 +139,7 @@ class BsgChipPkg:
                 yield from self.gen_clients(f)
 
     def gen_tgroups(self, group):
-        for a, f in group.__dict__.items():
+        for a, f in reversed(group.__dict__.items()):
             # Skip builtin
             if "__" in a:
                 continue

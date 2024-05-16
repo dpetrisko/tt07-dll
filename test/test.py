@@ -39,25 +39,25 @@ async def test_project(dut):
     # TODO: This is coupled to toplevel
 
     pinmap = {
-        "p_tag_clk_i": (dut.ui_in, 0b00000001, 0),
-        "p_tag_en_i": (dut.ui_in, 0b00000010, 0),
-        "p_tag_data_i": (dut.ui_in, 0b00000100, 0),
-        "p_osc_clk_o": (dut.uo_out, 0b00000001, 1),
-        "p_ds_clk_o": (dut.uo_out, 0b00000010, 1),
-        "p_gen_clk_o": (dut.uo_out, 0b00000100, 1),
-        "p_dly_clk_o": (dut.uo_out, 0b00001000, 1),
-        "p_mon_clk_o": (dut.uo_out, 0b00010000, 1),
-        "p_div_clk_o": (dut.uo_out, 0b00100000, 1),
-        "p_ds_reset_o": (dut.uo_out, 0b01000000, 1),
-        "p_mon_reset_o": (dut.uo_out, 0b10000000, 1),
-        "p_div_count_0_o": (dut.uio_out, 0b00000001, 1),
-        "p_div_count_1_o": (dut.uio_out, 0b00000010, 1),
-        "p_div_count_2_o": (dut.uio_out, 0b00000100, 1),
-        "p_div_count_3_o": (dut.uio_out, 0b00001000, 1),
-        "p_div_count_4_o": (dut.uio_out, 0b00010000, 1),
-        "p_div_count_5_o": (dut.uio_out, 0b00100000, 1),
-        "p_div_count_6_o": (dut.uio_out, 0b01000000, 1),
-        "p_div_count_7_o": (dut.uio_out, 0b10000000, 1),
+        "p_tag_clk_i": dut.ui_in_0,
+        "p_tag_en_i": dut.ui_in_1,
+        "p_tag_data_i": dut.ui_in_2,
+        "p_osc_clk_o": dut.uo_out_0,
+        "p_ds_clk_o": dut.uo_out_1,
+        "p_gen_clk_o": dut.uo_out_2,
+        "p_dly_clk_o": dut.uo_out_3,
+        "p_mon_clk_o": dut.uo_out_4,
+        "p_div_clk_o": dut.uo_out_5,
+        "p_ds_reset_o": dut.uo_out_6,
+        "p_mon_reset_o": dut.uo_out_7,
+        "p_div_count_0_o": dut.uio_out_0,
+        "p_div_count_1_o": dut.uio_out_1,
+        "p_div_count_2_o": dut.uio_out_2,
+        "p_div_count_3_o": dut.uio_out_3,
+        "p_div_count_4_o": dut.uio_out_4,
+        "p_div_count_5_o": dut.uio_out_5,
+        "p_div_count_6_o": dut.uio_out_6,
+        "p_div_count_7_o": dut.uio_out_7,
     }
 
     tagmap = {
@@ -68,11 +68,9 @@ async def test_project(dut):
 
     bcp = BsgChipPkg()
     bcs = BsgChipSequencer(bcp)
-    bct = BsgChipTester(bcp)
+    bct = BsgChipTester(bcp, dut.clk, pinmap, tagmap)
 
-    await bct.register(dut.clk, pinmap, tagmap)
-    # await bct.run_gen(bcs.gen_init(), cocotb_tick)
-    # await btu.tagseq_send( tick)
+    await bct.run_gen(bcs.gen_init())
 
     # TODO: END BSG BSG
 
@@ -99,4 +97,3 @@ async def test_project(dut):
     await ClockCycles(dut.clk, 1)
     await ClockCycles(dut.clk, 1)
     await ClockCycles(dut.clk, 1)
-

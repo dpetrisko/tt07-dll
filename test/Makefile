@@ -22,6 +22,9 @@ VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_dmc/bsg_dmc_dly_line_v3.sv
 VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_misc/bsg_buf.sv
 VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_misc/bsg_clkbuf.sv
 VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_misc/bsg_mux.sv
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_tag/bsg_tag_client.sv
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_tag/bsg_tag_client_unsync.sv
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_tag/bsg_tag_master_decentralized.sv
 VERILOG_SOURCES += $(SRC_DIR)/bsg_clk_dly_gen.sv
 VERILOG_SOURCES += $(SRC_DIR)/bsg_lfsr_div30.sv
 
@@ -30,6 +33,7 @@ VERILOG_SOURCES += $(SRC_DIR)/project.v
 COMPILE_ARGS    += -sv
 COMPILE_ARGS    += --trace
 COMPILE_ARGS    += --trace-structs
+COMPILE_ARGS    += --trace-depth 10
 COMPILE_ARGS    += --timing
 COMPILE_ARGS    += -I$(SRC_DIR)
 COMPILE_ARGS    += -I$(SRC_DIR)/basejump_stl/bsg_clk_gen

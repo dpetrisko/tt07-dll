@@ -23,38 +23,32 @@ class BsgChipPinUtils:
 
     # Read a pin from the cocotb model
     def pin_read(self, pin):
-        pinst, pmask, pdir = self.pinmap[pin]
-        pval = self.pinmon[pinst]
+        pinst = self.pinmap[pin]
 
-        if (pval & pmask) == 0:
-            return 0
-        else:
-            return 1
+        return pinst.value
 
     # Write a pin from the cocotb model (which must be synchronized
     def pin_write(self, pin, val):
-        pinst, pmask, pdir = self.pinmap[pin]
-        pval = self.pinmon[pinst]
+        pinst = self.pinmap[pin]
 
-        if val == 0:
-            pval = pval & ~pmask
-        else:
-            pval = pval | pmask
+        pinst.value = val
 
-        self.pinmon[pinst] = pval
+    # Register a clock for the testbench
+    def clock_register(self, clk):
+        print("Registering clock")
+        self.clk = clk
 
     # Register a pinmap for a certain chip
-    async def pinmap_register(self, pinmap):
+    def pinmap_register(self, pinmap):
+        print("Registering pinmap")
         self.pinmap = pinmap
-        self.pinmon = {}
 
-        for pin, (pinst, pmask, pdir) in self.pinmap.items():
-            self.pinmon[pinst] = 0
-
-        await cocotb.start_soon(self.sync())
+        for pin in pinmap.keys():
+            self.pin_write(pin, 0)
 
     # Registers a bsg_tag bus in the pinmap
-    async def tagmap_register(self, tagmap):
+    def tagmap_register(self, tagmap):
+        print("Registering tagmap")
         self.tag_clk = tagmap["tag_clk"]
         self.tag_en = tagmap["tag_en"]
         self.tag_data = tagmap["tag_data"]
@@ -63,29 +57,13 @@ class BsgChipPinUtils:
         self.pin_write(self.tag_en, 1),
         self.pin_write(self.tag_data, 1)
 
-        await cocotb.start_soon(self.sync())
-
-    # Synchronize pin changes and advance the clock
-    async def sync(self):
-        await ReadWrite()
-        for pin, (pinst, pmask, pdir) in self.pinmap.items():
-            if pdir == 0:
-                t = cocotb.utils.get_sim_time()
-                print("[{}] Syncing {} to {}".format(t, pin, self.pinmon[pinst]))
-                pinst.value = self.pinmon[pinst]
-            else:
-                self.pinmon[pinst] = pinst.value
-
     # Sends a tagseq using an agnostic edge function
-    async def tagbus_send(self, seq, clk):
+    async def tagbus_send(self, seq):
         for b in seq:
             t = cocotb.utils.get_sim_time()
-            print("[{}] SEND B: {}".format(t, b))
             self.pin_write(self.tag_data, b)
             self.pin_write(self.tag_clk, 0)
-            await cocotb.start_soon(self.sync())
-            await RisingEdge(clk)
+            await RisingEdge(self.clk)
             self.pin_write(self.tag_clk, 1)
-            await cocotb.start_soon(self.sync())
-            await RisingEdge(clk)
+            await RisingEdge(self.clk)
 

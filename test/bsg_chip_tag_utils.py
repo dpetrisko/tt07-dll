@@ -7,10 +7,9 @@ from bsg_chip_pkg import BsgChipPkg
 
 class BsgChipTagUtils:
     def __init__(self, pkg):
-        self.tag_els = pkg.params.tag_els[0]
-        self.tag_lg_els = pkg.params.tag_lg_els[0]
+        self.tag_id_width = pkg.params.tag_lg_els[0]
         self.tag_width = pkg.params.tag_max_payload_width[0]
-        self.tag_lg_width = pkg.params.tag_lg_width[0]
+        self.tag_len = pkg.params.tag_lg_width[0]
 
     # Generate a single start bit
     def start_bit(self):
@@ -24,22 +23,6 @@ class BsgChipTagUtils:
     def gen_bits(self, width, payload):
         for i in range(width):
             yield ((payload >> i) & 0x1)
-
-    # Idle for N cycles
-    def idle(self, N):
-        for _ in range(N):
-            yield from self.stop_bit()
-
-    # Reset tag master
-    def reset_master(self):
-        yield from self.start_bit()
-        # Make sure we get enough cycles for tag master to initialize itself
-        yield from self.idle(100)
-
-    # Reset a client
-    def reset_client(self, client):
-        reset_val = (2**self.tag_width)-1
-        yield from self.write_client(client[0], 0, client[1], reset_val)
 
     # Recursively reset all clients in the below hierarchy
     def reset_recurse(self, client):
@@ -55,16 +38,38 @@ class BsgChipTagUtils:
 
     # Write to a specific client
     def write_client(self, nodeId, data_not_reset, width, payload):
+        print("nodeId data_not_reset width payload")
+        print("Writing client: {} {} {} {}\n".format(nodeId, data_not_reset, width, payload))
         # Start bit
         yield from self.start_bit()
         # Payload length
-        yield from self.gen_bits(self.tag_lg_width, width)
+        yield from self.gen_bits(self.tag_len, width)
         # data_not_reset
         yield data_not_reset
         # nodeID
-        yield from self.gen_bits(self.tag_lg_els, nodeId)
+        yield from self.gen_bits(self.tag_id_width, nodeId)
         # Payload
-        yield from self.gen_bits(self.tag_width, payload)
+        yield from self.gen_bits(width, payload)
         # Stop bit
         yield from self.stop_bit()
+
+    # Reset tag master
+    def reset_master(self):
+        yield from self.start_bit()
+        # Make sure we get enough cycles for tag master to initialize itself
+        yield from self.idle(100)
+
+    # Reset a client
+    def reset_client(self, client):
+        val = (2**client[1])-1
+        yield from self.write_client(client[0], 0, client[1], val)
+
+    # Set a specific client
+    def set_client(self, client, val):
+        yield from self.write_client(client[0], 1, client[1], val)
+
+    # Idle for N cycles
+    def idle(self, N):
+        for _ in range(N):
+            yield from self.stop_bit()
 

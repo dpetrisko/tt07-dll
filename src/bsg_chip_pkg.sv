@@ -66,25 +66,17 @@ package bsg_chip_pkg;
   typedef struct packed
   {
   
-    // Programmable control for oscillator
-    // Width=2
-    bsg_tag_s ctl;
-    
-    // Trigger for oscillator
-    // Width=1
-    bsg_tag_s trigger;
-    
-    // Downsampler width
-    // Width=3
-    bsg_tag_s ds;
-    
-    // Selection: 0=oscillator, 1=downsampler, 2=external, 3=zero
+    // Selection: 0=osc, 1=dly
     // Width=2
     bsg_tag_s sel;
     
-  } bsg_chip_osc_tag_lines_s;
-  localparam bsg_chip_osc_tag_local_els_gp =
-    $bits(bsg_chip_osc_tag_lines_s) / $bits(bsg_tag_s);
+    // Synchronous reset
+    // Width=1
+    bsg_tag_s reset;
+    
+  } bsg_chip_mon_tag_lines_s;
+  localparam bsg_chip_mon_tag_local_els_gp =
+    $bits(bsg_chip_mon_tag_lines_s) / $bits(bsg_tag_s);
     
   typedef struct packed
   {
@@ -100,17 +92,25 @@ package bsg_chip_pkg;
   typedef struct packed
   {
   
-    // Synchronous reset
-    // Width=1
-    bsg_tag_s reset;
-    
-    // Selection: 0=osc, 1=dly
+    // Selection: 0=oscillator, 1=downsampler, 2=external, 3=zero
     // Width=2
     bsg_tag_s sel;
     
-  } bsg_chip_mon_tag_lines_s;
-  localparam bsg_chip_mon_tag_local_els_gp =
-    $bits(bsg_chip_mon_tag_lines_s) / $bits(bsg_tag_s);
+    // Downsampler width
+    // Width=3
+    bsg_tag_s ds;
+    
+    // Trigger for oscillator
+    // Width=1
+    bsg_tag_s trigger;
+    
+    // Programmable control for oscillator
+    // Width=2
+    bsg_tag_s ctl;
+    
+  } bsg_chip_osc_tag_lines_s;
+  localparam bsg_chip_osc_tag_local_els_gp =
+    $bits(bsg_chip_osc_tag_lines_s) / $bits(bsg_tag_s);
     
   //////////////////////////////////////////////////////////////////////
   //////// Warning: Danger Zone
@@ -119,11 +119,11 @@ package bsg_chip_pkg;
   typedef struct packed
   {
   
-    bsg_chip_osc_tag_lines_s osc;
+    bsg_chip_mon_tag_lines_s mon;
 
     bsg_chip_dly_tag_lines_s dly;
 
-    bsg_chip_mon_tag_lines_s mon;
+    bsg_chip_osc_tag_lines_s osc;
 
   } bsg_chip_tag_lines_s;
   localparam bsg_chip_tag_local_els_gp =
