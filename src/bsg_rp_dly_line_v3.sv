@@ -40,7 +40,7 @@ endmodule
       , output clk_o
       );
       wire lobit, hibit;
-      sky130_fd_sc_hd__conb T0 (.HI(hibit) .LO(lobit));
+      sky130_fd_sc_hd__conb T0 (.HI(hibit), .LO(lobit));
   
 
   wire fb_inv;
@@ -74,7 +74,7 @@ endmodule
         );
 
 
-  sky130_fd_sc_hd__clkbuf B0 (.X(clk_o), .A(fb_col[2]));
+  sky130_fd_sc_hd__clkbuf_1 B0 (.X(clk_o), .A(fb_col[2]));
 endmodule
 
 
@@ -120,23 +120,23 @@ endmodule
   assign n[0] = clk_180;
 
 
-    sky130_fd_sc_hd__clkbuf B0 (.X(n[1]), .A(n[0]));
+    sky130_fd_sc_hd__clkbuf_1 B0 (.X(n[1]), .A(n[0]));
 
 
-    sky130_fd_sc_hd__clkbuf B1 (.X(n[2]), .A(n[1]));
+    sky130_fd_sc_hd__clkbuf_1 B1 (.X(n[2]), .A(n[1]));
 
 
-    sky130_fd_sc_hd__clkbuf B2 (.X(n[3]), .A(n[2]));
+    sky130_fd_sc_hd__clkbuf_1 B2 (.X(n[3]), .A(n[2]));
 
 
-    sky130_fd_sc_hd__clkbuf B3 (.X(n[4]), .A(n[3]));
+    sky130_fd_sc_hd__clkbuf_1 B3 (.X(n[4]), .A(n[3]));
 
 
   // Delay value ignored in synthesis
   wire #100 clk_dly = n[4];
 
   wire lobit, hibit;
-  sky130_fd_sc_hd__conb T0 (.HI(hibit) .LO(lobit));
+  sky130_fd_sc_hd__conb T0 (.HI(hibit), .LO(lobit));
 
   wire meta;
   sky130_fd_sc_hd__dfrtn meta_r (.Q(meta), .CLKN(clk_i), .RESET_B(async_reset_neg), .D(clk_dly));
