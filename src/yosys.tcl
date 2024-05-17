@@ -23,6 +23,7 @@ set buf_ipin         A
 set buf_opin         X
 
 set design tt_um_dpetrisko_ttdll
+set json_file output.json
 set verilog_v_file output.sv2v.v
 set elab_v_file output.elab.v
 set opt_v_file output.opt.v
@@ -71,8 +72,10 @@ read_systemverilog -link --top-module ${design}
 write_verilog -nostr -noattr -noexpr -nohex -nodec ${verilog_v_file}
 
 # elaborate design hierarchy
-#hierarchy -check -top ${design}
 hierarchy -generate -check -top ${design}
+
+# write json
+write_json ${json_file}
 
 # write elab design
 write_verilog -nostr -noattr -noexpr -nohex -nodec ${elab_v_file}

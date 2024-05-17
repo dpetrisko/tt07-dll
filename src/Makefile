@@ -28,8 +28,10 @@ bsg_rp_dly_line_v3.sv: basejump_stl/hard/sky_130/bsg_dmc/bsg_rp_dly_line_v3.py $
 		$(shell $(PYTHON) $(BSG_CHIP_SCRIPT) --gentype=param --par=dly_post_buf) \
 		> $@
 
-synth: yosys.tcl bsg_rp_clk_gen_osc_unit_v3.sv bsg_rp_clk_gen_osc_unit_v3.sv bsg_rp_dly_line_v3.sv
+output.syn.v: yosys.tcl bsg_rp_clk_gen_osc_unit_v3.sv bsg_rp_clk_gen_osc_unit_v3.sv bsg_rp_dly_line_v3.sv
 	yosys -c $<
+
+synth: output.syn.v
 
 clean:
 	rm -rf slpp_all/

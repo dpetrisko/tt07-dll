@@ -51,6 +51,7 @@ endif
 
 else
 
+SIM := iverilog
 # Gate level simulation:
 SIM_BUILD        = sim_build/gl
 COMPILE_ARGS    += -DGL_TEST
