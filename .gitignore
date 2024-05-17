@@ -15,4 +15,4 @@ test/gate_level_netlist.v
 src/__pycache__/
 check.rpt
 stat.rpt
-
+config_patched.tcl

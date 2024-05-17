@@ -15,6 +15,10 @@ project:
   
   # List your project's source files here. Source files must be in ./src and you must list each source file separately, one per line:
   source_files:  
+    - "basejump_stl/bsg_misc/bsg_defines.sv"
+    - "basejump_stl/bsg_clk_gen/bsg_clk_gen.svh"
+    - "basejump_stl/bsg_tag/bsg_tag.svh"
+
     - "basejump_stl/bsg_tag/bsg_tag_pkg.sv"
     - "basejump_stl/bsg_misc/bsg_decode.sv"
     - "basejump_stl/bsg_misc/bsg_mux2_gatestack.sv"
