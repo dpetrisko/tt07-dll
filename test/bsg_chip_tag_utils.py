@@ -38,8 +38,6 @@ class BsgChipTagUtils:
 
     # Write to a specific client
     def write_client(self, nodeId, data_not_reset, width, payload):
-        print("nodeId data_not_reset width payload")
-        print("Writing client: {} {} {} {}\n".format(nodeId, data_not_reset, width, payload))
         # Start bit
         yield from self.start_bit()
         # Payload length
@@ -55,21 +53,26 @@ class BsgChipTagUtils:
 
     # Reset tag master
     def reset_master(self):
+        print("Resetting tag master")
         yield from self.start_bit()
         # Make sure we get enough cycles for tag master to initialize itself
-        yield from self.idle(100)
+        cycles = 10 + self.tag_id_width + self.tag_id_width + self.tag_len
+        yield from self.idle(cycles)
 
     # Reset a client
     def reset_client(self, client):
+        print("Resetting tag client {}".format(client))
         val = (2**client[1])-1
         yield from self.write_client(client[0], 0, client[1], val)
 
     # Set a specific client
     def set_client(self, client, val):
+        print("Setting tag client {}={}".format(client, val))
         yield from self.write_client(client[0], 1, client[1], val)
 
     # Idle for N cycles
     def idle(self, N):
+        print("Idling for {} cycles...".format(N))
         for _ in range(N):
             yield from self.stop_bit()
 

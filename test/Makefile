@@ -7,8 +7,6 @@ SRC_DIR = $(PWD)/../src
 TEST_DIR = $(PWD)/../test
 
 ifneq ($(GATES),yes)
-SIM ?= verilator
-
 # RTL simulation:
 SIM_BUILD        = sim_build/rtl
 
@@ -30,8 +28,10 @@ VERILOG_SOURCES += $(SRC_DIR)/bsg_lfsr_div30.sv
 
 VERILOG_SOURCES += $(SRC_DIR)/project.v
 
+SIM := verilator
+ifeq ($(SIM),verilator)
 COMPILE_ARGS    += -sv
-COMPILE_ARGS    += --trace
+COMPILE_ARGS    += --trace-fst
 COMPILE_ARGS    += --trace-structs
 COMPILE_ARGS    += --trace-depth 10
 COMPILE_ARGS    += --timing
@@ -42,7 +42,12 @@ COMPILE_ARGS    += -I$(SRC_DIR)/basejump_stl/bsg_tag
 COMPILE_ARGS    += -DBSG_OSC_GRANULARITY=20
 
 PLUSARGS        += --trace
-PLUSARGS        += --trace-file tb.vcd
+PLUSARGS        += --trace-file tb.fst
+
+view:
+	surfer tb.fst &
+
+endif
 
 else
 

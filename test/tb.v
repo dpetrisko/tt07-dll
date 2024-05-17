@@ -15,8 +15,16 @@ module tb ();
   end
   `endif
 
-  // Wire up the inputs and outputs:
   reg clk;
+  always
+    begin
+      clk = 0;
+      forever #10 clk = ~clk;
+    end
+
+
+  // Wire up the inputs and outputs:
+  //reg clk;
   reg rst_n;
   reg ena;
   wire [7:0] ui_in;
