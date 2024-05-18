@@ -32,6 +32,10 @@ set ::env(CLOCK_PORT) {clk}
 
 # Configuration docs: https://openlane.readthedocs.io/en/latest/reference/configuration.html
 
+# DWP mods
+set ::env(USE_SYNLIG) {1}
+set ::env(SYNLIG_DEFER) {1}
+
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # !!! DO NOT CHANGE ANYTHING BELOW THIS POINT !!!
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

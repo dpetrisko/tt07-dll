@@ -15,15 +15,21 @@ project:
   
   # List your project's source files here. Source files must be in ./src and you must list each source file separately, one per line:
   source_files:  
-    - "basejump_stl/bsg_misc/bsg_defines.sv"
-    - "basejump_stl/bsg_clk_gen/bsg_clk_gen.svh"
-    - "basejump_stl/bsg_tag/bsg_tag.svh"
-
     - "basejump_stl/bsg_tag/bsg_tag_pkg.sv"
+
     - "basejump_stl/bsg_misc/bsg_decode.sv"
-    - "basejump_stl/bsg_misc/bsg_mux2_gatestack.sv"
+    - "basejump_stl/bsg_misc/bsg_counter_clear_up.sv"
+    - "basejump_stl/bsg_misc/bsg_counter_clock_downsample.sv"
     - "basejump_stl/bsg_misc/bsg_dff_en.sv"
     - "basejump_stl/bsg_misc/bsg_dff.sv"
+    - "basejump_stl/bsg_misc/bsg_mux2_gatestack.sv"
+    - "basejump_stl/bsg_misc/bsg_muxi2_gatestack.sv"
+    - "basejump_stl/bsg_misc/bsg_nor3.sv"
+    - "basejump_stl/bsg_misc/bsg_nand.sv"
+    - "basejump_stl/bsg_misc/bsg_reduce.sv"
+    - "basejump_stl/bsg_misc/bsg_strobe.sv"
+    - "basejump_stl/bsg_misc/bsg_xnor.sv"
+
     - "basejump_stl/bsg_tag/bsg_tag_client.sv"
     - "basejump_stl/bsg_tag/bsg_tag_client_unsync.sv"
     - "basejump_stl/bsg_tag/bsg_tag_master_decentralized.sv"
@@ -39,12 +45,18 @@ project:
     - "basejump_stl/hard/sky_130/bsg_misc/bsg_mux.sv"
 
     - "bsg_chip_pkg.sv"
+    - "bsg_rp_clk_gen_osc_unit_v3.sv"
     - "bsg_rp_clk_gen_osc_v3.sv"
     - "bsg_rp_dly_line_v3.sv"
     - "bsg_lfsr_div30.sv"
     - "bsg_clk_dly_gen.sv"
     - "project.v"
 
+  # List your project's source directories here. Source files must be in ./src and you must list each source file separately, one per line:
+  source_includes:
+    - "basejump_stl/bsg_misc"
+    - "basejump_stl/bsg_clk_gen"
+    - "basejump_stl/bsg_tag"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:
