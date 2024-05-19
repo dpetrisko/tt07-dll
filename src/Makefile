@@ -7,6 +7,8 @@ HARD_DMC ?= $(HARD)/bsg_dmc
 
 BSG_CHIP_SCRIPT ?= bsg_chip_pkg.py
 
+rp_files: bsg_rp_clk_gen_osc_v3.sv bsg_rp_clk_gen_osc_unit_v3.sv bsg_rp_dly_line_v3.sv
+
 bsg_rp_clk_gen_osc_unit_v3.sv: basejump_stl/hard/sky_130/bsg_clk_gen/bsg_rp_clk_gen_osc_unit_v3.py $(BSG_CHIP_SCRIPT) 
 	$(PYTHON) $< \
 		$(shell $(PYTHON) $(BSG_CHIP_SCRIPT) --gentype=param --par=osc_num_rows) \
@@ -27,8 +29,6 @@ bsg_rp_dly_line_v3.sv: basejump_stl/hard/sky_130/bsg_dmc/bsg_rp_dly_line_v3.py $
 		$(shell $(PYTHON) $(BSG_CHIP_SCRIPT) --gentype=param --par=dly_num_cols) \
 		$(shell $(PYTHON) $(BSG_CHIP_SCRIPT) --gentype=param --par=dly_post_buf) \
 		> $@
-
-rp_files: bsg_rp_clk_gen_osc_v3.sv bsg_rp_clk_gen_osc_unit_v3.sv bsg_rp_dly_line_v3.sv
 
 output.syn.v: yosys.tcl rp_files
 	yosys -c $<
