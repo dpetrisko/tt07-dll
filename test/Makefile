@@ -1,3 +1,7 @@
+# Setup environment
+TOP := $(PWD)/../..
+include $(TOP)/Makefile.common
+
 # Makefile
 # See https://docs.cocotb.org/en/stable/quickstart.html for more info
 
@@ -5,7 +9,6 @@
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
 TEST_DIR = $(PWD)/../test
-
 
 ifeq ($(RTL_HARD),yes)
 SIM := verilator
