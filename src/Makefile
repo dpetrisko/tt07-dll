@@ -45,11 +45,13 @@ $(SYN_DIR)/output.syn.v: yosys.tcl all
 synth: $(SYN_DIR)/output.syn.v
 
 clean:
+	rm -rf __pycache__/
 	rm -rf slpp_all/
 	rm -f bsg_chip_pkg.sv
 	rm -f bsg_rp_clk_gen_osc_v3.sv
 	rm -f bsg_rp_clk_gen_osc_unit_v3.sv
 	rm -f bsg_rp_dly_line_v3.sv
+	rm -rf $(SYN_DIR)
 	rm -f check.rpt
 	rm -f output.elab.v
 	rm -f output.map.v
