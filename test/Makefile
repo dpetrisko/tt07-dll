@@ -4,6 +4,7 @@ include $(TOP)/Makefile.common
 
 # Makefile
 # See https://docs.cocotb.org/en/stable/quickstart.html for more info
+SIM := vcs
 
 # defaults
 TOPLEVEL_LANG ?= verilog
@@ -11,7 +12,6 @@ SRC_DIR = $(PWD)/../src
 TEST_DIR = $(PWD)/../test
 
 ifeq ($(RTL_HARD),yes)
-SIM := verilator
 # RTL Hard simulation:
 SIM_BUILD        = sim_build/rtl_hard
 
@@ -74,12 +74,11 @@ COMPILE_ARGS    += -DFUNCTIONAL
 PLUSARGS        += --trace
 PLUSARGS        += --trace-file tb.fst
 
-view:
-	surfer tb.fst &
+view: tb.fst 
+	surfer $< &
 
 else ifeq ($(GATES),yes)
 
-SIM := iverilog
 # Gate level simulation:
 SIM_BUILD        = sim_build/gl
 COMPILE_ARGS    += -DGL_TEST
@@ -93,15 +92,25 @@ VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/sky130_f
 # this gets copied in by the GDS action workflow
 VERILOG_SOURCES += $(PWD)/gate_level_netlist.v
 
+# RTL sim
 else
-SIM := verilator
 # RTL simulation:
 SIM_BUILD        = sim_build/rtl
 
-VERILOG_SOURCES += $(TEST_DIR)/config.vlt
-
 VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_tag/bsg_tag_pkg.sv
 VERILOG_SOURCES += $(SRC_DIR)/bsg_chip_pkg.sv
+
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_misc/bsg_counter_clear_up.sv
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_misc/bsg_counter_clock_downsample.sv
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_misc/bsg_dff.sv
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_misc/bsg_dff_en.sv
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_misc/bsg_mux2_gatestack.sv
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_misc/bsg_muxi2_gatestack.sv
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_misc/bsg_nor3.sv
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_misc/bsg_nand.sv
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_misc/bsg_reduce.sv
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_misc/bsg_strobe.sv
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_misc/bsg_xnor.sv
 
 VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_async/bsg_launch_sync_sync.sv
 VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_clk_gen/bsg_clk_gen_osc_v3.sv
@@ -115,6 +124,28 @@ VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_tag/bsg_tag_master_decentralized.
 VERILOG_SOURCES += $(SRC_DIR)/bsg_clk_dly_gen.sv
 VERILOG_SOURCES += $(SRC_DIR)/bsg_lfsr_div30.sv
 VERILOG_SOURCES += $(SRC_DIR)/project.v
+
+ifeq ($(SIM),vcs)
+VCS_BIN_DIR := $(VCS_BIN)
+
+COMPILE_ARGS    += -full64
+COMPILE_ARGS    += -sverilog
+COMPILE_ARGS    += +v2k
+COMPILE_ARGS    += +noportcoerce
+COMPILE_ARGS    += +incdir+$(SRC_DIR)
+COMPILE_ARGS    += +incdir+$(SRC_DIR)/basejump_stl/bsg_clk_gen
+COMPILE_ARGS    += +incdir+$(SRC_DIR)/basejump_stl/bsg_misc
+COMPILE_ARGS    += +incdir+$(SRC_DIR)/basejump_stl/bsg_tag
+
+PLUSARGS        += +vcs+vcdpluson
+PLUSARGS        += +vcs+vcdplusautoflushon
+PLUSARGS        += +vcs+dumpfile=tb.vpd
+
+view: vcdplus.vpd
+	$(DVE) -full64 -vpd $< &
+
+else ifeq ($(SIM),verilator)
+VERILOG_SOURCES += $(TEST_DIR)/config.vlt
 
 COMPILE_ARGS    += -sv
 COMPILE_ARGS    += --trace-fst
@@ -130,9 +161,10 @@ COMPILE_ARGS    += -DBSG_OSC_GRANULARITY=20
 PLUSARGS        += --trace
 PLUSARGS        += --trace-file tb.fst
 
-view:
-	surfer tb.fst &
+view: tb.fst
+	surfer $< &
 
+endif
 endif
 
 # Include the testbench sources:
@@ -144,3 +176,4 @@ MODULE = test
 
 # include cocotb's make rules to take care of the simulator setup
 include $(shell cocotb-config --makefiles)/Makefile.sim
+

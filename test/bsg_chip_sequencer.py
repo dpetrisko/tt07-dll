@@ -16,19 +16,26 @@ class BsgChipSequencer:
         yield from self.tag.reset_master()
         yield from self.tag.reset_recurse(self.btc)
 
-        yield from self.tag.idle(35)
+        yield from self.tag.idle(50)
 
+        yield from self.tag.set_client(self.btc.osc.trigger, 0)
         yield from self.tag.set_client(self.btc.osc.ctl, 0)
+        yield from self.tag.set_client(self.btc.osc.sel, 0)
+        yield from self.tag.set_client(self.btc.osc.trigger, 1)
         yield from self.tag.set_client(self.btc.osc.ds, 1)
         yield from self.tag.set_client(self.btc.osc.ds, 0)
-        yield from self.tag.set_client(self.btc.osc.sel, 0)
 
         yield from self.tag.set_client(self.btc.dly.unused, 0)
 
-        yield from self.tag.set_client(self.btc.mon.reset, 1)
         yield from self.tag.set_client(self.btc.mon.sel, 0)
+        yield from self.tag.set_client(self.btc.mon.reset, 1)
         yield from self.tag.set_client(self.btc.mon.reset, 0)
 
-        yield from self.tag.idle(35)
+        yield from self.tag.set_client(self.btc.div.reset, 1)
+        yield from self.tag.set_client(self.btc.div.enable, 1)
+        yield from self.tag.set_client(self.btc.div.clear, 0)
+        yield from self.tag.set_client(self.btc.div.reset, 0)
+
+        yield from self.tag.idle(50)
 
 

@@ -56,14 +56,14 @@ class BsgChipTagUtils:
         print("Resetting tag master")
         yield from self.start_bit()
         # Make sure we get enough cycles for tag master to initialize itself
-        cycles = 10 + self.tag_id_width + self.tag_id_width + self.tag_len
+        cycles = 20 + self.tag_id_width + self.tag_id_width + self.tag_len
         yield from self.idle(cycles)
 
     # Reset a client
     def reset_client(self, client):
         print("Resetting tag client {}".format(client))
         val = (2**client[1])-1
-        yield from self.write_client(client[0], 0, client[1], val)
+        yield from self.write_client(client[0], 0, client[1], 1)
 
     # Set a specific client
     def set_client(self, client, val):

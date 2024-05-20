@@ -67,7 +67,11 @@ module bsg_clk_dly_gen
   `BSG_TAG_CLIENT_UNSYNC(tag_lines_lo.dly.unused, dly_unused, 1);
 
   `BSG_TAG_CLIENT_UNSYNC(tag_lines_lo.mon.sel, mon_sel, 1);
-  `BSG_TAG_CLIENT_SYNC(tag_lines_lo.mon.reset , mon_reset, 1, mon_clk_lo);
+  `BSG_TAG_CLIENT_SYNC(tag_lines_lo.mon.reset, mon_reset, 1, mon_clk_lo);
+
+  `BSG_TAG_CLIENT_SYNC(tag_lines_lo.div.reset, div_reset, 1, div_clk_lo);
+  `BSG_TAG_CLIENT_SYNC(tag_lines_lo.div.enable, div_enable, 1, div_clk_lo);
+  `BSG_TAG_CLIENT_SYNC(tag_lines_lo.div.clear, div_clear, 1, div_clk_lo);
 
   //// Cast tag payloads
   `include "bsg_clk_gen.svh"
@@ -145,22 +149,23 @@ module bsg_clk_dly_gen
      ,.init_val_p(0)
      ,.disable_overflow_warning_p(1)
      )
-   mon_counter
+   div_counter
     (.clk_i(div_clk_lo)
-     ,.reset_i(mon_reset_r_lo)
-     ,.clear_i(1'b0)
-     ,.up_i(1'b1)
+     ,.reset_i(div_reset_r_lo)
+     ,.clear_i(div_clear_r_lo)
+     ,.up_i(div_enable_r_lo)
      ,.count_o(div_count_r_lo)
      );
   `BSG_DATABUF(div_count_r, div_count_width_gp);
 
-  //assign osc_clk_o = osc_clk_buf_lo;
-  //assign gen_clk_o = gen_clk_buf_lo;
-  //assign dly_clk_o = dly_clk_buf_lo;
-  //assign mon_clk_o = mon_clk_buf_lo;
-  //assign div_clk_o = div_clk_buf_lo;
-  //assign ds_reset_o = ds_reset_r_buf_lo;
-  //assign mon_reset_o = mon_reset_r_buf_lo;
+  assign osc_clk_o = osc_clk_buf_lo;
+  assign ds_clk_o = ds_clk_buf_lo;
+  assign gen_clk_o = gen_clk_buf_lo;
+  assign dly_clk_o = dly_clk_buf_lo;
+  assign mon_clk_o = mon_clk_buf_lo;
+  assign div_clk_o = div_clk_buf_lo;
+  assign ds_reset_o = ds_reset_r_buf_lo;
+  assign mon_reset_o = mon_reset_r_buf_lo;
   assign div_count_o = div_count_r_buf_lo;
 
 endmodule

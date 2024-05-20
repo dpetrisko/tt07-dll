@@ -99,6 +99,17 @@ class BsgChipPkg:
         self.clients.mon.sel = (i, 2, "Selection: 0=osc, 1=dly")
         i += 1
 
+        ##########################
+        ##### Division Object Declaration
+        ##########################
+        self.clients.div = Object()
+        self.clients.div.reset = (i, 1, "Synchronous reset")
+        i += 1
+        self.clients.div.enable = (i, 1, "Synchronous enable")
+        i += 1
+        self.clients.div.clear = (i, 1, "Synchronous clear")
+        i += 1
+
     ###########################
     #### Recurse through a field and yield
     ###########################

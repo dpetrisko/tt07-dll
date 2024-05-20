@@ -8,11 +8,11 @@ module tb ();
 
   // Dump the signals to a VCD file. You can view it with gtkwave.
   `ifndef VERILATOR
-  initial begin
-    $dumpfile("tb.vcd");
-    $dumpvars(0, tb);
-    #1;
-  end
+  //initial begin
+  //  $dumpfile("tb.vcd");
+  //  $dumpvars(0, tb);
+  //  #1;
+  //end
   `endif
 
   reg clk;

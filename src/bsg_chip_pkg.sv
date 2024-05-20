@@ -66,6 +66,25 @@ package bsg_chip_pkg;
   typedef struct packed
   {
   
+    // Synchronous clear
+    // Width=1
+    bsg_tag_s clear;
+    
+    // Synchronous enable
+    // Width=1
+    bsg_tag_s enable;
+    
+    // Synchronous reset
+    // Width=1
+    bsg_tag_s reset;
+    
+  } bsg_chip_div_tag_lines_s;
+  localparam bsg_chip_div_tag_local_els_gp =
+    $bits(bsg_chip_div_tag_lines_s) / $bits(bsg_tag_s);
+    
+  typedef struct packed
+  {
+  
     // Selection: 0=osc, 1=dly
     // Width=2
     bsg_tag_s sel;
@@ -119,6 +138,8 @@ package bsg_chip_pkg;
   typedef struct packed
   {
   
+    bsg_chip_div_tag_lines_s div;
+
     bsg_chip_mon_tag_lines_s mon;
 
     bsg_chip_dly_tag_lines_s dly;
