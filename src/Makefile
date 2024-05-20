@@ -1,3 +1,6 @@
+# Setup environment
+TOP := $(PWD)/../..
+include $(TOP)/Makefile.common
 
 PYTHON ?= python
 
@@ -31,10 +34,15 @@ bsg_rp_dly_line_v3.sv: basejump_stl/hard/sky_130/bsg_dmc/bsg_rp_dly_line_v3.py b
 		$(shell $(PYTHON) bsg_chip_pkg.py --gentype=param --par=dly_post_buf) \
 		> $@
 
-output.syn.v: yosys.tcl rp_files
-	yosys -c $<
+SYN_DIR ?= syn_build
 
-synth: output.syn.v
+$(SYN_DIR)/output.syn.v: yosys.tcl all
+	mkdir -p $(SYN_DIR)
+	cp $< $(@D)
+	cd $(SYN_DIR); \
+		yosys -c $<
+
+synth: $(SYN_DIR)/output.syn.v
 
 clean:
 	rm -rf slpp_all/

@@ -17,9 +17,9 @@ project:
   source_files:  
     - "basejump_stl/bsg_tag/bsg_tag_pkg.sv"
 
-    - "basejump_stl/bsg_misc/bsg_decode.sv"
     - "basejump_stl/bsg_misc/bsg_counter_clear_up.sv"
     - "basejump_stl/bsg_misc/bsg_counter_clock_downsample.sv"
+    - "basejump_stl/bsg_misc/bsg_decode.sv"
     - "basejump_stl/bsg_misc/bsg_dff_en.sv"
     - "basejump_stl/bsg_misc/bsg_dff.sv"
     - "basejump_stl/bsg_misc/bsg_mux2_gatestack.sv"

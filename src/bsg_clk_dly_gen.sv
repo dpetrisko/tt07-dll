@@ -48,7 +48,7 @@ module bsg_clk_dly_gen
      )
    btm
     (.clk_i(tag_clk_buf_lo)
-     ,.data_i(tag_data_buf_lo & tag_en_lo)
+     ,.data_i(tag_data_buf_lo & tag_en_buf_lo)
      ,.node_id_offset_i(tag_node_id_offset_li)
      ,.clients_o(tag_lines_lo)
      );
@@ -60,11 +60,12 @@ module bsg_clk_dly_gen
   // Declare tag clients
   `BSG_TAG_CLIENT_UNSYNC(tag_lines_lo.osc.sel, osc_sel, 2);
   `BSG_TAG_CLIENT_SYNC(tag_lines_lo.osc.ds, osc_ds, osc_ds_width_gp+1, osc_clk_lo);
+  `BSG_TAG_CLIENT_UNSYNC(tag_lines_lo.osc.async_reset, osc_async_reset, 1);
   // Inside bsg_clk_gen_osc_v3
   //`BSG_TAG_CLIENT_UNSYNC(tag_lines_lo.osc.trigger, osc_trigger, 1);
   //`BSG_TAG_CLIENT_UNSYNC(tag_lines_lo.osc.ctl, osc_ctl, osc_ctl_width_gp);
 
-  `BSG_TAG_CLIENT_UNSYNC(tag_lines_lo.dly.unused, dly_unused, 1);
+  `BSG_TAG_CLIENT_UNSYNC(tag_lines_lo.dly.async_reset, dly_async_reset, 1);
 
   `BSG_TAG_CLIENT_UNSYNC(tag_lines_lo.mon.sel, mon_sel, 1);
   `BSG_TAG_CLIENT_SYNC(tag_lines_lo.mon.reset, mon_reset, 1, mon_clk_lo);
@@ -83,7 +84,7 @@ module bsg_clk_dly_gen
   bsg_clk_gen_osc_v3
    #(.num_taps_p(osc_num_taps_gp))
    osc
-    (.async_reset_i(ext_reset_lo)
+    (.async_reset_i(osc_async_reset_r_lo)
      ,.bsg_tag_i(tag_lines_lo.osc.ctl)
      ,.bsg_tag_trigger_i(tag_lines_lo.osc.trigger)
      ,.clk_o(osc_clk_lo)
@@ -119,7 +120,7 @@ module bsg_clk_dly_gen
    #(.num_taps_p(dly_num_taps_gp))
    dly
     (.clk_i(gen_clk_buf_lo)
-     ,.async_reset_i(ext_reset_lo)
+     ,.async_reset_i(dly_async_reset_r_lo)
      ,.clk_o(dly_clk_lo)
      );
   `BSG_CLKBUF(dly);
