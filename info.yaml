@@ -14,49 +14,8 @@ project:
   top_module:  "tt_um_dpetrisko_ttdll"
   
   # List your project's source files here. Source files must be in ./src and you must list each source file separately, one per line:
-  source_files:  
-    - "basejump_stl/bsg_tag/bsg_tag_pkg.sv"
-
-    - "basejump_stl/bsg_misc/bsg_counter_clear_up.sv"
-    - "basejump_stl/bsg_misc/bsg_counter_clock_downsample.sv"
-    - "basejump_stl/bsg_misc/bsg_decode.sv"
-    - "basejump_stl/bsg_misc/bsg_dff_en.sv"
-    - "basejump_stl/bsg_misc/bsg_dff.sv"
-    - "basejump_stl/bsg_misc/bsg_mux2_gatestack.sv"
-    - "basejump_stl/bsg_misc/bsg_muxi2_gatestack.sv"
-    - "basejump_stl/bsg_misc/bsg_nor3.sv"
-    - "basejump_stl/bsg_misc/bsg_nand.sv"
-    - "basejump_stl/bsg_misc/bsg_reduce.sv"
-    - "basejump_stl/bsg_misc/bsg_strobe.sv"
-    - "basejump_stl/bsg_misc/bsg_xnor.sv"
-
-    - "basejump_stl/bsg_tag/bsg_tag_client.sv"
-    - "basejump_stl/bsg_tag/bsg_tag_client_unsync.sv"
-    - "basejump_stl/bsg_tag/bsg_tag_master_decentralized.sv"
-
-    - "basejump_stl/hard/sky_130/bsg_async/bsg_launch_sync_sync.sv"
-    - "basejump_stl/hard/sky_130/bsg_async/bsg_sync_sync.sv"
-    - "basejump_stl/hard/sky_130/bsg_async/bsg_sync_sync_async_reset_unit.sv"
-    - "basejump_stl/hard/sky_130/bsg_async/bsg_sync_sync_unit.sv"
-    - "basejump_stl/hard/sky_130/bsg_clk_gen/bsg_clk_gen_osc_v3.sv"
-    - "basejump_stl/hard/sky_130/bsg_dmc/bsg_dmc_dly_line_v3.sv"
-    - "basejump_stl/hard/sky_130/bsg_misc/bsg_buf.sv"
-    - "basejump_stl/hard/sky_130/bsg_misc/bsg_clkbuf.sv"
-    - "basejump_stl/hard/sky_130/bsg_misc/bsg_mux.sv"
-
-    - "bsg_chip_pkg.sv"
-    - "bsg_rp_clk_gen_osc_unit_v3.sv"
-    - "bsg_rp_clk_gen_osc_v3.sv"
-    - "bsg_rp_dly_line_v3.sv"
-    - "bsg_lfsr_div30.sv"
-    - "bsg_clk_dly_gen.sv"
-    - "project.v"
-
-  # List your project's source directories here. Source files must be in ./src and you must list each source file separately, one per line:
-  source_includes:
-    - "basejump_stl/bsg_misc"
-    - "basejump_stl/bsg_clk_gen"
-    - "basejump_stl/bsg_tag"
+  source_files:
+    - "sv2v_build/tt_um_dpetrisko_ttdll.sv2v.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:
