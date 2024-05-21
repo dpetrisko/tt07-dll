@@ -23,66 +23,71 @@ set buf_ipin         A
 set buf_opin         X
 
 set design tt_um_dpetrisko_ttdll
-set json_file output.json
-set verilog_v_file output.sv2v.v
-set elab_v_file output.elab.v
-set opt_v_file output.opt.v
-set map_v_file output.map.v
-set syn_v_file output.syn.v
+set json_file ${design}.json
+set verilog_v_file ${design}.sv2v.v
+set elab_v_file ${design}.elab.v
+set opt_v_file ${design}.opt.v
+set map_v_file ${design}.map.v
+set syn_v_file ${design}.syn.v
 
 set check_file check.rpt
 set stat_file stat.rpt
 
-systemverilog_defaults -add "-I${proj_dir}/src"
-systemverilog_defaults -add "-I${proj_dir}/src/basejump_stl/bsg_clk_gen"
-systemverilog_defaults -add "-I${proj_dir}/src/basejump_stl/bsg_misc"
-systemverilog_defaults -add "-I${proj_dir}/src/basejump_stl/bsg_tag"
+verilog_defaults -add "-I${proj_dir}/src"
 
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_tag/bsg_tag_pkg.sv"
+read_verilog -sv ${proj_dir}/src/sv2v_build/tt_um_dpetrisko_ttdll.sv2v.v
+read_verilog -sv ${proj_dir}/src/basejump_stl/bsg_test/bsg_nonsynth_delay_line.sv
 
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_counter_clear_up.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_counter_clock_downsample.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_decode.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_dff_en.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_dff.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_mux2_gatestack.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_muxi2_gatestack.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_nor3.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_nand.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_reduce.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_strobe.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_xnor.sv"
-
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_tag/bsg_tag_client.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_tag/bsg_tag_client_unsync.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_tag/bsg_tag_master_decentralized.sv"
-
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/hard/sky_130/bsg_async/bsg_launch_sync_sync.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/hard/sky_130/bsg_async/bsg_sync_sync.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/hard/sky_130/bsg_async/bsg_sync_sync_async_reset_unit.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/hard/sky_130/bsg_async/bsg_sync_sync_unit.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/hard/sky_130/bsg_clk_gen/bsg_clk_gen_osc_v3.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/hard/sky_130/bsg_dmc/bsg_dmc_dly_line_v3.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/hard/sky_130/bsg_misc/bsg_buf.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/hard/sky_130/bsg_misc/bsg_clkbuf.sv"
-read_systemverilog -defer "${proj_dir}/src/basejump_stl/hard/sky_130/bsg_misc/bsg_mux.sv"
-
-read_systemverilog -defer "${proj_dir}/src/bsg_chip_pkg.sv"
-read_systemverilog -defer "${proj_dir}/src/bsg_rp_clk_gen_osc_unit_v3.sv"
-read_systemverilog -defer "${proj_dir}/src/bsg_rp_clk_gen_osc_v3.sv"
-read_systemverilog -defer "${proj_dir}/src/bsg_rp_dly_line_v3.sv"
-read_systemverilog -defer "${proj_dir}/src/bsg_lfsr_div30.sv"
-read_systemverilog -defer "${proj_dir}/src/bsg_clk_dly_gen.sv"
-read_systemverilog -defer "${proj_dir}/src/project.v"
-
-read_systemverilog -link --top-module ${design}
-
-setattr -mod -set keep 1 {\bsg_rp_clk_gen_osc_v3}
-setattr -mod -set keep 1 {\bsg_rp_clk_gen_osc_v3_col}
-setattr -mod -set keep 1 {\bsg_rp_clk_gen_osc_v3_row}
-setattr -mod -set keep 1 {\bsg_rp_dly_line_ctl_reg}
-setattr -mod -set keep 1 {\bsg_rp_dly_line_unit_v3}
-setattr -mod -set keep 1 {\bsg_rp_dly_line_v3}
+#systemverilog_defaults -add "-I${proj_dir}/src"
+#systemverilog_defaults -add "-I${proj_dir}/src/basejump_stl/bsg_clk_gen"
+#systemverilog_defaults -add "-I${proj_dir}/src/basejump_stl/bsg_misc"
+#systemverilog_defaults -add "-I${proj_dir}/src/basejump_stl/bsg_tag"
+#
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_tag/bsg_tag_pkg.sv"
+#
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_counter_clear_up.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_counter_clock_downsample.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_decode.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_dff_en.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_dff.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_mux2_gatestack.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_muxi2_gatestack.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_nor3.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_nand.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_reduce.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_strobe.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_misc/bsg_xnor.sv"
+#
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_tag/bsg_tag_client.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_tag/bsg_tag_client_unsync.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/bsg_tag/bsg_tag_master_decentralized.sv"
+#
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/hard/sky_130/bsg_async/bsg_launch_sync_sync.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/hard/sky_130/bsg_async/bsg_sync_sync.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/hard/sky_130/bsg_async/bsg_sync_sync_async_reset_unit.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/hard/sky_130/bsg_async/bsg_sync_sync_unit.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/hard/sky_130/bsg_clk_gen/bsg_clk_gen_osc_v3.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/hard/sky_130/bsg_dmc/bsg_dmc_dly_line_v3.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/hard/sky_130/bsg_misc/bsg_buf.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/hard/sky_130/bsg_misc/bsg_clkbuf.sv"
+#read_systemverilog -defer "${proj_dir}/src/basejump_stl/hard/sky_130/bsg_misc/bsg_mux.sv"
+#
+#read_systemverilog -defer "${proj_dir}/src/bsg_chip_pkg.sv"
+#read_systemverilog -defer "${proj_dir}/src/bsg_rp_clk_gen_osc_unit_v3.sv"
+#read_systemverilog -defer "${proj_dir}/src/bsg_rp_clk_gen_osc_v3.sv"
+#read_systemverilog -defer "${proj_dir}/src/bsg_rp_dly_line_v3.sv"
+#read_systemverilog -defer "${proj_dir}/src/bsg_lfsr_div30.sv"
+#read_systemverilog -defer "${proj_dir}/src/bsg_clk_dly_gen.sv"
+#read_systemverilog -defer "${proj_dir}/src/project.v"
+#
+#read_systemverilog -link --top-module ${design}
+#
+#setattr -mod -set keep 1 {\bsg_rp_clk_gen_osc_v3}
+#setattr -mod -set keep 1 {\bsg_rp_clk_gen_osc_v3_col}
+#setattr -mod -set keep 1 {\bsg_rp_clk_gen_osc_v3_row}
+#setattr -mod -set keep 1 {\bsg_rp_dly_line_ctl_reg}
+#setattr -mod -set keep 1 {\bsg_rp_dly_line_unit_v3}
+#setattr -mod -set keep 1 {\bsg_rp_dly_line_v3}
 
 # write verilog design
 write_verilog -nostr -noattr -noexpr -nohex -nodec ${verilog_v_file}
@@ -90,14 +95,14 @@ write_verilog -nostr -noattr -noexpr -nohex -nodec ${verilog_v_file}
 # elaborate design hierarchy
 hierarchy -generate -check -top ${design}
 
-# write json
-write_json ${json_file}
-
 # write elab design
 write_verilog -nostr -noattr -noexpr -nohex -nodec ${elab_v_file}
 
+# write json
+yosys proc; write_json ${json_file}
+
 # the high-level stuff
-yosys proc; opt; fsm; opt; yosys memory; opt
+yosys opt; fsm; opt; yosys memory; opt
 
 # write opt design
 write_verilog -nostr -noattr -noexpr -nohex -nodec ${opt_v_file}

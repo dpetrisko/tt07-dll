@@ -89,17 +89,58 @@ VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/primitiv
 
 COMPILE_ARGS    += -DFUNCTIONAL
 COMPILE_ARGS    += -DSIM
+
+else ifeq ($(ELAB),yes)
+SIM_BUILD        = sim_build/elab
+
+VERILOG_SOURCES :=
+VERILOG_SOURCES += $(SRC_DIR)/syn_build/tt_um_dpetrisko_ttdll.elab.v
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_test/bsg_nonsynth_delay_line.sv
+VERILOG_SOURCES += $(shell yosys-config --datdir)/simcells.v
+VERILOG_SOURCES += $(shell yosys-config --datdir)/simlib.v
+VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/sky130_fd_sc_hd.v
+VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/primitives.v
+
+COMPILE_ARGS    += -DFUNCTIONAL
+COMPILE_ARGS    += -DSIM
 COMPILE_ARGS    += -DUNIT_DELAY=\#1
 
-else ifeq ($(SYNTH),yes)
+else ifeq ($(MAP),yes)
+SIM_BUILD        = sim_build/map
+
+VERILOG_SOURCES :=
+VERILOG_SOURCES += $(SRC_DIR)/syn_build/tt_um_dpetrisko_ttdll.map.v
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_test/bsg_nonsynth_delay_line.sv
+VERILOG_SOURCES += $(shell yosys-config --datdir)/simcells.v
+VERILOG_SOURCES += $(shell yosys-config --datdir)/simlib.v
+VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/sky130_fd_sc_hd.v
+VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/primitives.v
+
+COMPILE_ARGS    += -DFUNCTIONAL
+COMPILE_ARGS    += -DSIM
+COMPILE_ARGS    += -DUNIT_DELAY=\#1
+
+else ifeq ($(OPT),yes)
+SIM_BUILD        = sim_build/opt
+
+VERILOG_SOURCES :=
+VERILOG_SOURCES += $(SRC_DIR)/syn_build/tt_um_dpetrisko_ttdll.opt.v
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_test/bsg_nonsynth_delay_line.sv
+VERILOG_SOURCES += $(shell yosys-config --datdir)/simcells.v
+VERILOG_SOURCES += $(shell yosys-config --datdir)/simlib.v
+VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/sky130_fd_sc_hd.v
+VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/primitives.v
+
+COMPILE_ARGS    += -DFUNCTIONAL
+COMPILE_ARGS    += -DSIM
+COMPILE_ARGS    += -DUNIT_DELAY=\#1
+
+else ifeq ($(SYN),yes)
 SIM_BUILD        = sim_build/synth
 
 VERILOG_SOURCES :=
-#VERILOG_SOURCES += $(SRC_DIR)/syn_build/post_synth_netlist.v
-#VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/sky130_fd_sc_hd.v
-#VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/primitives.v
-#VERILOG_SOURCES += $(SRC_DIR)/syn_build/output.sv2v.v
-VERILOG_SOURCES += $(SRC_DIR)/sv2v_build/tt_um_dpetrisko_ttdll.sv2v.v
+VERILOG_SOURCES += $(SRC_DIR)/syn_build/tt_um_dpetrisko_ttdll.syn.v
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_test/bsg_nonsynth_delay_line.sv
 VERILOG_SOURCES += $(shell yosys-config --datdir)/simcells.v
 VERILOG_SOURCES += $(shell yosys-config --datdir)/simlib.v
 VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/sky130_fd_sc_hd.v
@@ -181,7 +222,13 @@ COMPILE_ARGS    += +nospecify
 else ifeq ($(SV2V),yes)
 COMPILE_ARGS    += +notimingcheck
 COMPILE_ARGS    += +nospecify
-else ifeq ($(SYNTH),yes)
+else ifeq ($(ELAB),yes)
+COMPILE_ARGS    += +notimingcheck
+COMPILE_ARGS    += +nospecify
+else ifeq ($(MAP),yes)
+COMPILE_ARGS    += +notimingcheck
+COMPILE_ARGS    += +nospecify
+else ifeq ($(SYN),yes)
 COMPILE_ARGS    += +notimingcheck
 COMPILE_ARGS    += +nospecify
 endif
