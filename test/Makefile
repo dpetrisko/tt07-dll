@@ -65,6 +65,7 @@ VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/hard/sky_130/bsg_dmc/bsg_dmc_dly_line
 VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/hard/sky_130/bsg_misc/bsg_buf.sv
 VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/hard/sky_130/bsg_misc/bsg_clkbuf.sv
 VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/hard/sky_130/bsg_misc/bsg_mux.sv
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_test/bsg_nonsynth_delay_line.sv
 
 VERILOG_SOURCES += $(SRC_DIR)/bsg_rp_clk_gen_osc_unit_v3.sv
 VERILOG_SOURCES += $(SRC_DIR)/bsg_rp_clk_gen_osc_v3.sv
@@ -75,6 +76,38 @@ VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/primitiv
 
 COMPILE_ARGS    += -DFUNCTIONAL
 COMPILE_ARGS    += -DSIM
+
+else ifeq ($(SV2V),yes)
+SIM_BUILD        = sim_build/sv2v
+
+VERILOG_SOURCES :=
+VERILOG_SOURCES += $(SRC_DIR)/sv2v_build/tt_um_dpetrisko_ttdll.sv2v.v
+VERILOG_SOURCES += $(SRC_DIR)/basejump_stl/bsg_test/bsg_nonsynth_delay_line.sv
+
+VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/sky130_fd_sc_hd.v
+VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/primitives.v
+
+COMPILE_ARGS    += -DFUNCTIONAL
+COMPILE_ARGS    += -DSIM
+COMPILE_ARGS    += -DUNIT_DELAY=\#1
+
+else ifeq ($(SYNTH),yes)
+SIM_BUILD        = sim_build/synth
+
+VERILOG_SOURCES :=
+#VERILOG_SOURCES += $(SRC_DIR)/syn_build/post_synth_netlist.v
+#VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/sky130_fd_sc_hd.v
+#VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/primitives.v
+#VERILOG_SOURCES += $(SRC_DIR)/syn_build/output.sv2v.v
+VERILOG_SOURCES += $(SRC_DIR)/sv2v_build/tt_um_dpetrisko_ttdll.sv2v.v
+VERILOG_SOURCES += $(shell yosys-config --datdir)/simcells.v
+VERILOG_SOURCES += $(shell yosys-config --datdir)/simlib.v
+VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/sky130_fd_sc_hd.v
+VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/primitives.v
+
+COMPILE_ARGS    += -DFUNCTIONAL
+COMPILE_ARGS    += -DSIM
+COMPILE_ARGS    += -DUNIT_DELAY=\#1
 
 else ifeq ($(GATES),yes)
 
@@ -123,22 +156,35 @@ else ifeq ($(SIM),vcs)
 VCS_BIN_DIR := $(VCS_BIN)
 
 COMPILE_ARGS    += -full64
-COMPILE_ARGS    += -sverilog
+COMPILE_ARGS    += -notice
+COMPILE_ARGS    += -V
+COMPILE_ARGS    += -sverilog -assert svaext
 COMPILE_ARGS    += +v2k
 COMPILE_ARGS    += +noportcoerce
+COMPILE_ARGS    += +vc
+COMPILE_ARGS    += +vcs+loopreport
+COMPILE_ARGS    += -timescale=1ps/1ps
+COMPILE_ARGS    += -diag timescale
+COMPILE_ARGS    += +lint=TFIPC-L
 COMPILE_ARGS    += +incdir+$(SRC_DIR)
 COMPILE_ARGS    += +incdir+$(SRC_DIR)/basejump_stl/bsg_clk_gen
 COMPILE_ARGS    += +incdir+$(SRC_DIR)/basejump_stl/bsg_misc
 COMPILE_ARGS    += +incdir+$(SRC_DIR)/basejump_stl/bsg_tag
+COMPILE_ARGS    += +plusarg_save
+COMPILE_ARGS    += +vcs+vcdpluson
+COMPILE_ARGS    += +vcs+vcdplusautoflushon
+COMPILE_ARGS    += +vcs+dumpfile+tb.vpd
 
 ifeq ($(RTL_HARD),yes)
 COMPILE_ARGS    += +notimingcheck
 COMPILE_ARGS    += +nospecify
+else ifeq ($(SV2V),yes)
+COMPILE_ARGS    += +notimingcheck
+COMPILE_ARGS    += +nospecify
+else ifeq ($(SYNTH),yes)
+COMPILE_ARGS    += +notimingcheck
+COMPILE_ARGS    += +nospecify
 endif
-
-PLUSARGS        += +vcs+vcdpluson
-PLUSARGS        += +vcs+vcdplusautoflushon
-PLUSARGS        += +vcs+dumpfile+tb.vpd
 
 view: vcdplus.vpd
 	$(DVE) -full64 -vpd $< &

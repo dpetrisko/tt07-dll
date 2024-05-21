@@ -12,13 +12,13 @@ set pdk_type $::env(PDK_TYPE)
 source ${techmap_dir}/openlane/config.tcl
 set lib_file $::env(LIB_SYNTH)
 
-set tiehi_cell       ${pdk_type}__conb
+set tiehi_cell       ${pdk_type}__conb_1
 set tiehi_pin        HI
-set tielo_cell       ${pdk_type}__conb
+set tielo_cell       ${pdk_type}__conb_1
 set tielo_pin        LO
 set clkbuf_cell      ${pdk_type}__clkbuf_1
 set clkbuf_pin       X
-set buf_cell         ${pdk_type}__buf
+set buf_cell         ${pdk_type}__buf_1
 set buf_ipin         A
 set buf_opin         X
 
@@ -76,6 +76,13 @@ read_systemverilog -defer "${proj_dir}/src/bsg_clk_dly_gen.sv"
 read_systemverilog -defer "${proj_dir}/src/project.v"
 
 read_systemverilog -link --top-module ${design}
+
+setattr -mod -set keep 1 {\bsg_rp_clk_gen_osc_v3}
+setattr -mod -set keep 1 {\bsg_rp_clk_gen_osc_v3_col}
+setattr -mod -set keep 1 {\bsg_rp_clk_gen_osc_v3_row}
+setattr -mod -set keep 1 {\bsg_rp_dly_line_ctl_reg}
+setattr -mod -set keep 1 {\bsg_rp_dly_line_unit_v3}
+setattr -mod -set keep 1 {\bsg_rp_dly_line_v3}
 
 # write verilog design
 write_verilog -nostr -noattr -noexpr -nohex -nodec ${verilog_v_file}

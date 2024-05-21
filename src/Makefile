@@ -2,13 +2,18 @@
 TOP := $(PWD)/../..
 include $(TOP)/Makefile.common
 
+SRC_DIR = $(PWD)/../src
+TEST_DIR = $(PWD)/../test
+
 PYTHON ?= python
 
 HARD ?= basejump_stl/hard/sky_130
 HARD_CLK ?= $(HARD)/bsg_clk_gen
 HARD_DMC ?= $(HARD)/bsg_dmc
 
-all: bsg_rp_clk_gen_osc_v3.sv bsg_rp_clk_gen_osc_unit_v3.sv bsg_rp_dly_line_v3.sv
+RP_FILES := bsg_rp_clk_gen_osc_v3.sv bsg_rp_clk_gen_osc_unit_v3.sv bsg_rp_dly_line_v3.sv
+
+all: $(RP_FILES)
 
 bsg_chip_pkg.sv: bsg_chip_pkg.py
 	$(PYTHON) $< --gentype=pkg > $@
@@ -36,13 +41,27 @@ bsg_rp_dly_line_v3.sv: basejump_stl/hard/sky_130/bsg_dmc/bsg_rp_dly_line_v3.py b
 
 SYN_DIR ?= syn_build
 
-$(SYN_DIR)/output.syn.v: yosys.tcl all
+$(SYN_DIR)/output.syn.v: yosys.tcl $(RP_FILES)
 	mkdir -p $(SYN_DIR)
 	cp $< $(@D)
 	cd $(SYN_DIR); \
 		yosys -c $<
 
 synth: $(SYN_DIR)/output.syn.v
+
+SV2V_DIR ?= sv2v_build
+
+$(BSG_SV2V_DIR)/cmd.txt: $(SRC_DIR)/flist.txt $(RP_FILES)
+	cat $< | envsubst > $@
+
+$(SV2V_DIR)/tt_um_dpetrisko_ttdll.sv2v.v: $(BSG_SV2V_DIR)/cmd.txt
+	mkdir -p $(SV2V_DIR)
+	$(MAKE) -C $(BSG_SV2V_DIR) clean convert_sv2v DESIGN_NAME=tt_um_dpetrisko_ttdll DESIGN_FILELIST=$<
+	cp $(BSG_SV2V_DIR)/results/$(@F) $@
+	# Reinsert parameter
+	sed -i "s/bsg_nonsynth_delay_line/bsg_nonsynth_delay_line #(.delay_p(10))/g" $@
+
+sv2v: $(SV2V_DIR)/tt_um_dpetrisko_ttdll.sv2v.v
 
 clean:
 	rm -rf __pycache__/

@@ -21,3 +21,4 @@ ucli.key
 vcdplus.vpd
 DVEfiles/
 src/syn_build
+src/sv2v_build
