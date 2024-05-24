@@ -36,7 +36,7 @@ set stat_file stat.rpt
 verilog_defaults -add "-I${proj_dir}/src"
 
 read_verilog -sv ${proj_dir}/src/sv2v_build/tt_um_dpetrisko_ttdll.sv2v.v
-read_verilog -sv ${proj_dir}/src/basejump_stl/bsg_test/bsg_nonsynth_delay_line.sv
+read_verilog -sv ${proj_dir}/src/bsg_nonsynth_delay_line.sv
 
 #systemverilog_defaults -add "-I${proj_dir}/src"
 #systemverilog_defaults -add "-I${proj_dir}/src/basejump_stl/bsg_clk_gen"

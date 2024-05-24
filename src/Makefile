@@ -58,8 +58,6 @@ $(SV2V_DIR)/tt_um_dpetrisko_ttdll.sv2v.v: $(BSG_SV2V_DIR)/cmd.txt
 	mkdir -p $(SV2V_DIR)
 	$(MAKE) -C $(BSG_SV2V_DIR) clean convert_sv2v DESIGN_NAME=tt_um_dpetrisko_ttdll DESIGN_FILELIST=$<
 	cp $(BSG_SV2V_DIR)/results/$(@F) $@
-	# Reinsert parameter
-	sed -i "s/bsg_nonsynth_delay_line/bsg_nonsynth_delay_line #(.delay_p(10))/g" $@
 
 sv2v: $(SV2V_DIR)/tt_um_dpetrisko_ttdll.sv2v.v
 

@@ -129,7 +129,7 @@ endmodule
 
   // Synthesize as blackbox
   wire clk_dly;
-  bsg_nonsynth_delay_line #(.width_p(1), .delay_p(10)) clk_dly_BSG_DONT_TOUCH (.o(clk_dly), .i(n[2]));
+  bsg_nonsynth_delay_line clk_dly_BSG_DONT_TOUCH (.o(clk_dly), .i(n[2]));
   wire meta;
   sky130_fd_sc_hd__dfrtn_1 meta_r (.Q(meta), .CLK_N(clk_i), .RESET_B(async_reset_neg), .D(clk_dly));
   wire meta_sync, meta_sync_sync, meta_sync_sync_inv;
