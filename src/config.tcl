@@ -32,9 +32,6 @@ set ::env(CLOCK_PORT) {clk}
 
 # Configuration docs: https://openlane.readthedocs.io/en/latest/reference/configuration.html
 
-# DWP mods
-set ::env(BASE_SDC) $::env(DESIGN_DIR)/base.tcl
-
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # !!! DO NOT CHANGE ANYTHING BELOW THIS POINT !!!
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

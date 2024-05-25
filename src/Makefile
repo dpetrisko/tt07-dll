@@ -76,4 +76,7 @@ clean:
 	rm -f output.sv2v.v
 	rm -f output.syn.v
 	rm -f stat.rpt
+	rm -f *_patched*
+	rm -f user_config.tcl
+	rm -rf sv2v_build
 
