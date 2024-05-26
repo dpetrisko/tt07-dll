@@ -23,13 +23,17 @@ $(SRC_DIR)/user_config.tcl: $(sv2v_netlist) $(SRC_DIR)/constraints_patched.sdc
 		--openlane2 \
 		--yaml $(PROJ_ROOT)/info.yaml \
 		--create-user-config
+	echo "set ::env(FP_DEF_TEMPLATE) $$::env(DESIGN_DIR)/tt_block_1x1_pg.def" >> $@
 	echo "set ::env(BASE_SDC_FILE) $$::env(DESIGN_DIR)/constraints_patched.sdc" >> $@
 
 $(SRC_DIR)/constraints_patched.sdc: $(SRC_DIR)/constraints.sdc
 	cat $(OPENLANE_ROOT)/openlane/scripts/base.sdc $< > $@
 
 open:
-	openlane --last-run --flow openinklayout $(SRC_DIR)/config_patched.tcl
+	python -m openlane --dockerized --run-tag wokwi --force-run-dir runs/wokwi --flow OpenInOpenROAD src/config_patched.tcl
+
+
+#"python -m openlane --dockerized --run-tag wokwi --force-run-dir runs/wokwi {progress} src/config_patched.tcl"
 
 $(sv2v_netlist):
 	cd $(SRC_DIR); \
