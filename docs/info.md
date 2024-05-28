@@ -19,7 +19,12 @@ TODO: Images coming soon!
 
 ## How to test
 
-Explain how to use your project
+The main driver for hardware testing is bsg_tag
+(https://github.com/bespoke-silicon-group/basejump_stl), which has python and C++ drivers available.
+The exact tag sequence can be found in the test/ directory. Examples of using this testing
+infrastructure is in ZynqParrot (https://github.com/black-parrot-hdk/zynq-parrot). If the sequence
+is completed successfully, the IO outputs will increment proporotionally to the current clock
+frequency!
 
 ## External hardware
 
