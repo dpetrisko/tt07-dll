@@ -29,6 +29,9 @@ $(SRC_DIR)/user_config.tcl: $(sv2v_netlist) $(SRC_DIR)/constraints_patched.sdc
 $(SRC_DIR)/constraints_patched.sdc: $(SRC_DIR)/constraints.sdc
 	cat $(OPENLANE_ROOT)/openlane/scripts/base.sdc $< > $@
 
-open:
+open.klayout:
+	python -m openlane --dockerized --run-tag wokwi --force-run-dir runs/wokwi --flow OpenInKLayout src/config_patched.tcl
+
+open.openroad:
 	python -m openlane --dockerized --run-tag wokwi --force-run-dir runs/wokwi --flow OpenInOpenROAD src/config_patched.tcl
 

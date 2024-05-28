@@ -42,7 +42,7 @@ source $::env(DESIGN_DIR)/user_config.tcl
 
 # Save some time
 set ::env(RUN_KLAYOUT_XOR) 0
-set ::env(RUN_KLAYOUT_DRC) 0
+set ::env(RUN_KLAYOUT_DRC) 1
 
 # Don't put clock buffers on the outputs
 set ::env(PL_RESIZER_BUFFER_OUTPUT_PORTS) 0
