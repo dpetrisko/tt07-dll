@@ -4,7 +4,9 @@ include $(TOP)/Makefile.common
 
 # Makefile
 # See https://docs.cocotb.org/en/stable/quickstart.html for more info
-SIM := vcs
+SIM := verilator
+
+all: sim
 
 # defaults
 TOPLEVEL_LANG ?= verilog

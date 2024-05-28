@@ -1,7 +1,7 @@
 
 # Setup environment
 TOP := $(PWD)/..
-include $(TOP)/Makefile.common
+include ../Makefile.common
 
 SRC_DIR = $(PROJ_ROOT)/src
 TEST_DIR = $(PROJ_ROOT)/test
@@ -31,11 +31,4 @@ $(SRC_DIR)/constraints_patched.sdc: $(SRC_DIR)/constraints.sdc
 
 open:
 	python -m openlane --dockerized --run-tag wokwi --force-run-dir runs/wokwi --flow OpenInOpenROAD src/config_patched.tcl
-
-
-#"python -m openlane --dockerized --run-tag wokwi --force-run-dir runs/wokwi {progress} src/config_patched.tcl"
-
-$(sv2v_netlist):
-	cd $(SRC_DIR); \
-		$(MAKE) sv2v
 
