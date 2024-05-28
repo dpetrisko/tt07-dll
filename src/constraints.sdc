@@ -2,8 +2,8 @@
 set ext_name "clk"
 
 set clk_name "clk_gen"
-set clk_gen_period_int 10; # 100 MHz
-set clk_gen_period_ext 10; # 100 MHz
+set clk_gen_period_int 20; # 50 MHz
+set clk_gen_period_ext 20; # 50 MHz
 set clk_gen_period_ds [expr $clk_gen_period_int * 2.0]
 set clk_uncertainty 0.25
 
@@ -20,8 +20,8 @@ set_false_path -setup -to [get_pins -of_objects [get_cells *hard_sync_int2_BSG_S
 set_false_path -hold -to [get_pins -of_objects [get_cells *hard_sync_int2_BSG_SYNC] -filter "name==D"]
 
 set dly_name "dly_gen"
-set dly_gen_period_int 10; # 100 MHz
-set dly_gen_period_ext 10; # 100 MHz
+set dly_gen_period_int 25; # 50 MHz
+set dly_gen_period_ext 25; # 50 MHz
 set dly_gen_period_ds [expr $dly_gen_period_int * 2.0]
 set dly_uncertainty 0.25
 

@@ -1342,7 +1342,7 @@ module bsg_rp_clk_gen_osc_v3
   output clk_o;
   wire clk_o,hibit,lobit,async_reset_neg,fb_inv,fb_dly,fb_gate,gate_en_sync_1_r,
   gate_en_sync_2_r,fb_gated;
-  wire [2:0] n;
+  wire [1:0] n;
   wire [4:1] fb_col;
 
   sky130_fd_sc_hd__conb_1
@@ -1378,7 +1378,7 @@ module bsg_rp_clk_gen_osc_v3
   );
 
 
-  sky130_fd_sc_hd__clkbuf_1
+  sky130_fd_sc_hd__clkbuf_2
   B0
   (
     .X(n[1]),
@@ -1386,23 +1386,15 @@ module bsg_rp_clk_gen_osc_v3
   );
 
 
-  sky130_fd_sc_hd__clkbuf_1
-  B1
-  (
-    .X(n[2]),
-    .A(n[1])
-  );
-
-
   bsg_nonsynth_delay_line
   fb_dly_BSG_DONT_TOUCH
   (
     .o(fb_dly),
-    .i(n[2])
+    .i(n[1])
   );
 
 
-  sky130_fd_sc_hd__clkinv_1
+  sky130_fd_sc_hd__clkinv_4
   I2
   (
     .Y(clk_o),
@@ -1410,7 +1402,7 @@ module bsg_rp_clk_gen_osc_v3
   );
 
 
-  sky130_fd_sc_hd__clkinv_1
+  sky130_fd_sc_hd__clkinv_4
   I3
   (
     .Y(fb_gate),
@@ -2135,7 +2127,7 @@ module bsg_rp_dly_line_v3
   wire clk_o,hibit,lobit,async_reset_neg,trigger_off,trigger_on,counter_en,pause,
   clk_dly,meta,meta_sync,meta_sync_sync,meta_sync_sync_inv;
   wire [15:0] ctl_r;
-  wire [2:0] n;
+  wire [1:0] n;
 
   sky130_fd_sc_hd__conb_1
   T0
@@ -2223,19 +2215,11 @@ module bsg_rp_dly_line_v3
   );
 
 
-  sky130_fd_sc_hd__clkbuf_1
-  B1
-  (
-    .X(n[2]),
-    .A(n[1])
-  );
-
-
   bsg_nonsynth_delay_line
   clk_dly_BSG_DONT_TOUCH
   (
     .o(clk_dly),
-    .i(n[2])
+    .i(n[1])
   );
 
 
