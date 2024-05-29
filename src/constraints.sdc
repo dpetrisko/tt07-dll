@@ -16,8 +16,12 @@ set clk_uncertainty 0.25
 create_clock -period $clk_gen_period_ext -name ${clk_name} [get_pins -of_objects [get_cells *gen_clkbuf.macro.genblk1_0_.b] -filter "direction==output"]
 set_clock_uncertainty $clk_uncertainty [get_clocks ${clk_name}]
 
+#set_dont_touch [get_cells *DONT_TOUCH*]
 set_false_path -setup -to [get_pins -of_objects [get_cells *hard_sync_int2_BSG_SYNC] -filter "name==D"]
 set_false_path -hold -to [get_pins -of_objects [get_cells *hard_sync_int2_BSG_SYNC] -filter "name==D"]
+
+set_false_path -setup -to [get_pins -of_objects [get_cells *osc_BSG_DONT_TOUCH.S2] -filter "name==D"]
+set_false_path -hold -to [get_pins -of_objects [get_cells *osc_BSG_DONT_TOUCH.S2] -filter "name==D"]
 
 set dly_name "dly_gen"
 set dly_gen_period_int 25; # 50 MHz
@@ -30,6 +34,12 @@ set_clock_uncertainty $dly_uncertainty [get_clocks ${dly_name}]
 
 set_false_path -setup -to [get_pins -of_objects [get_cells *dly_BSG_DONT_TOUCH.meta_r] -filter "name==D"]
 set_false_path -hold -to [get_pins -of_objects [get_cells *dly_BSG_DONT_TOUCH.meta_r] -filter "name==D"]
+
+set_false_path -setup -to [get_pins -of_objects [get_cells *dly_BSG_DONT_TOUCH.d90_BSG_DONT_TOUCH.S2] -filter "name==D"]
+set_false_path -hold -to [get_pins -of_objects [get_cells *dly_BSG_DONT_TOUCH.d90_BSG_DONT_TOUCH.S2] -filter "name==D"]
+
+set_false_path -setup -to [get_pins -of_objects [get_cells *dly_BSG_DONT_TOUCH.d180_BSG_DONT_TOUCH.S2] -filter "name==D"]
+set_false_path -hold -to [get_pins -of_objects [get_cells *dly_BSG_DONT_TOUCH.d180_BSG_DONT_TOUCH.S2] -filter "name==D"]
 
 set_clock_groups -asynchronous -group "${ext_name}" -group "${clk_name}" -group "${dly_name}"
 

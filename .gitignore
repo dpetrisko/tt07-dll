@@ -22,7 +22,8 @@ vcdplus.vpd
 DVEfiles/
 src/syn_build
 src/sv2v_build
-src/constraints_patched.sdc
+src/constraints_patched.pnr.sdc
+src/constraints_patched.signoff.sdc
 src/bsg_chip_pkg.sv
 src/bsg_rp_clk_gen_osc_unit_v3.sv
 src/bsg_rp_clk_gen_osc_v3.sv

@@ -1,6 +1,6 @@
 
 
-module bsg_clkbuf_width_p1_strength_p8_harden_p1
+module bsg_clkbuf_width_p1_strength_p4_harden_p1
 (
   i,
   o
@@ -10,7 +10,7 @@ module bsg_clkbuf_width_p1_strength_p8_harden_p1
   output [0:0] o;
   wire [0:0] o;
 
-  sky130_fd_sc_hd__clkbuf_8
+  sky130_fd_sc_hd__clkbuf_4
   \macro.genblk1_0_.b 
   (
     .X(o[0]),
@@ -556,7 +556,7 @@ module bsg_sync_sync_unit
   );
 
 
-  bsg_nonsynth_delay_line
+  sky130_fd_sc_hd__buf_1
   hard_sync_buf_BSG_DONT_TOUCH
   (
     .o(bsg_SYNC_2_n),
@@ -1017,7 +1017,7 @@ endmodule
 
 
 
-module bsg_mux2_gatestack_width_p4_harden_p1
+module bsg_mux2_gatestack_width_p5_harden_p1
 (
   i0,
   i1,
@@ -1025,45 +1025,51 @@ module bsg_mux2_gatestack_width_p4_harden_p1
   o
 );
 
-  input [3:0] i0;
-  input [3:0] i1;
-  input [3:0] i2;
-  output [3:0] o;
-  wire [3:0] o;
-  wire N0,N1,N2,N3,N4,N5,N6,N7;
+  input [4:0] i0;
+  input [4:0] i1;
+  input [4:0] i2;
+  output [4:0] o;
+  wire [4:0] o;
+  wire N0,N1,N2,N3,N4,N5,N6,N7,N8,N9;
   assign o[0] = (N0)? i1[0] : 
-                (N4)? i0[0] : 1'b0;
+                (N5)? i0[0] : 1'b0;
   assign N0 = i2[0];
   assign o[1] = (N1)? i1[1] : 
-                (N5)? i0[1] : 1'b0;
+                (N6)? i0[1] : 1'b0;
   assign N1 = i2[1];
   assign o[2] = (N2)? i1[2] : 
-                (N6)? i0[2] : 1'b0;
+                (N7)? i0[2] : 1'b0;
   assign N2 = i2[2];
   assign o[3] = (N3)? i1[3] : 
-                (N7)? i0[3] : 1'b0;
+                (N8)? i0[3] : 1'b0;
   assign N3 = i2[3];
-  assign N4 = ~i2[0];
-  assign N5 = ~i2[1];
-  assign N6 = ~i2[2];
-  assign N7 = ~i2[3];
+  assign o[4] = (N4)? i1[4] : 
+                (N9)? i0[4] : 1'b0;
+  assign N4 = i2[4];
+  assign N5 = ~i2[0];
+  assign N6 = ~i2[1];
+  assign N7 = ~i2[2];
+  assign N8 = ~i2[3];
+  assign N9 = ~i2[4];
 
 endmodule
 
 
 
-module bsg_dff_width_p4_harden_p1
+module bsg_dff_width_p5_harden_p1
 (
   clk_i,
   data_i,
   data_o
 );
 
-  input [3:0] data_i;
-  output [3:0] data_o;
+  input [4:0] data_i;
+  output [4:0] data_o;
   input clk_i;
-  wire [3:0] data_o;
-  reg data_o_3_sv2v_reg,data_o_2_sv2v_reg,data_o_1_sv2v_reg,data_o_0_sv2v_reg;
+  wire [4:0] data_o;
+  reg data_o_4_sv2v_reg,data_o_3_sv2v_reg,data_o_2_sv2v_reg,data_o_1_sv2v_reg,
+  data_o_0_sv2v_reg;
+  assign data_o[4] = data_o_4_sv2v_reg;
   assign data_o[3] = data_o_3_sv2v_reg;
   assign data_o[2] = data_o_2_sv2v_reg;
   assign data_o[1] = data_o_1_sv2v_reg;
@@ -1071,6 +1077,7 @@ module bsg_dff_width_p4_harden_p1
 
   always @(posedge clk_i) begin
     if(1'b1) begin
+      data_o_4_sv2v_reg <= data_i[4];
       data_o_3_sv2v_reg <= data_i[3];
       data_o_2_sv2v_reg <= data_i[2];
       data_o_1_sv2v_reg <= data_i[1];
@@ -1083,7 +1090,7 @@ endmodule
 
 
 
-module bsg_tag_client_unsync_width_p4
+module bsg_tag_client_unsync_width_p5
 (
   data_async_r_o,
   bsg_tag_i_clk_,
@@ -1092,29 +1099,29 @@ module bsg_tag_client_unsync_width_p4
   bsg_tag_i_en_
 );
 
-  output [3:0] data_async_r_o;
+  output [4:0] data_async_r_o;
   input bsg_tag_i_clk_;
   input bsg_tag_i_op_;
   input bsg_tag_i_param_;
   input bsg_tag_i_en_;
-  wire [3:0] data_async_r_o,tag_data_n;
+  wire [4:0] data_async_r_o,tag_data_n;
   wire op_r;
-  wire [3:3] tag_data_shift;
-  reg op_r_sv2v_reg,tag_data_shift_3_sv2v_reg;
+  wire [4:4] tag_data_shift;
+  reg op_r_sv2v_reg,tag_data_shift_4_sv2v_reg;
   assign op_r = op_r_sv2v_reg;
-  assign tag_data_shift[3] = tag_data_shift_3_sv2v_reg;
+  assign tag_data_shift[4] = tag_data_shift_4_sv2v_reg;
 
-  bsg_mux2_gatestack_width_p4_harden_p1
+  bsg_mux2_gatestack_width_p5_harden_p1
   tag_data_mux
   (
     .i0(data_async_r_o),
-    .i1({ tag_data_shift[3:3], data_async_r_o[3:1] }),
-    .i2({ op_r, op_r, op_r, op_r }),
+    .i1({ tag_data_shift[4:4], data_async_r_o[4:1] }),
+    .i2({ op_r, op_r, op_r, op_r, op_r }),
     .o(tag_data_n)
   );
 
 
-  bsg_dff_width_p4_harden_p1
+  bsg_dff_width_p5_harden_p1
   tag_data_reg
   (
     .clk_i(bsg_tag_i_clk_),
@@ -1126,7 +1133,7 @@ module bsg_tag_client_unsync_width_p4
   always @(posedge bsg_tag_i_clk_) begin
     if(1'b1) begin
       op_r_sv2v_reg <= bsg_tag_i_op_;
-      tag_data_shift_3_sv2v_reg <= bsg_tag_i_param_;
+      tag_data_shift_4_sv2v_reg <= bsg_tag_i_param_;
     end 
   end
 
@@ -1135,16 +1142,16 @@ endmodule
 
 
 
-module bsg_decode_num_out_p16
+module bsg_decode_num_out_p25
 (
   i,
   o
 );
 
-  input [3:0] i;
-  output [15:0] o;
-  wire [15:0] o;
-  assign o = { 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b1 } << i;
+  input [4:0] i;
+  output [24:0] o;
+  wire [24:0] o;
+  assign o = { 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b1 } << i;
 
 endmodule
 
@@ -1230,14 +1237,14 @@ module bsg_rp_clk_gen_osc_v3_col
   clk_o
 );
 
-  input [3:0] ctl_one_hot_i;
+  input [4:0] ctl_one_hot_i;
   input async_reset_i;
   input clkgate_i;
   input clkdly_i;
   input clkfb_i;
   output clk_o;
   wire clk_o,lobit,clkgate_inv,clkdly_inv;
-  wire [3:1] clkfb;
+  wire [4:1] clkfb;
   wire [0:0] async_reset_neg_li,async_set_neg_li;
 
   sky130_fd_sc_hd__conb_1
@@ -1320,6 +1327,19 @@ module bsg_rp_clk_gen_osc_v3_col
     .clkdly_i(clkdly_inv),
     .clkfb_i(clkfb[3]),
     .ctl_i(ctl_one_hot_i[3]),
+    .clk_o(clkfb[4])
+  );
+
+
+  bsg_rp_clk_gen_osc_v3_row
+  row_4_BSG_DONT_TOUCH
+  (
+    .async_reset_neg_i(async_set_neg_li[0]),
+    .async_set_neg_i(async_reset_neg_li[0]),
+    .clkgate_i(clkgate_inv),
+    .clkdly_i(clkdly_inv),
+    .clkfb_i(clkfb[4]),
+    .ctl_i(ctl_one_hot_i[4]),
     .clk_o(clk_o)
   );
 
@@ -1336,14 +1356,14 @@ module bsg_rp_clk_gen_osc_v3
   clk_o
 );
 
-  input [15:0] ctl_one_hot_i;
+  input [24:0] ctl_one_hot_i;
   input async_reset_i;
   input trigger_i;
   output clk_o;
   wire clk_o,hibit,lobit,async_reset_neg,fb_inv,fb_dly,fb_gate,gate_en_sync_1_r,
   gate_en_sync_2_r,fb_gated;
-  wire [1:0] n;
-  wire [4:1] fb_col;
+  wire [2:0] n;
+  wire [5:1] fb_col;
 
   sky130_fd_sc_hd__conb_1
   T0
@@ -1365,7 +1385,7 @@ module bsg_rp_clk_gen_osc_v3
   I1
   (
     .Y(fb_inv),
-    .A(fb_col[4])
+    .A(fb_col[5])
   );
 
 
@@ -1386,11 +1406,19 @@ module bsg_rp_clk_gen_osc_v3
   );
 
 
-  bsg_nonsynth_delay_line
+  sky130_fd_sc_hd__clkbuf_2
+  B1
+  (
+    .X(n[2]),
+    .A(n[1])
+  );
+
+
+  sky130_fd_sc_hd__buf_1
   fb_dly_BSG_DONT_TOUCH
   (
     .o(fb_dly),
-    .i(n[1])
+    .i(n[2])
   );
 
 
@@ -1444,7 +1472,7 @@ module bsg_rp_clk_gen_osc_v3
     .clkgate_i(fb_gated),
     .clkdly_i(fb_dly),
     .clkfb_i(1'b0),
-    .ctl_one_hot_i(ctl_one_hot_i[3:0]),
+    .ctl_one_hot_i(ctl_one_hot_i[4:0]),
     .clk_o(fb_col[1])
   );
 
@@ -1456,7 +1484,7 @@ module bsg_rp_clk_gen_osc_v3
     .clkgate_i(fb_gated),
     .clkdly_i(fb_dly),
     .clkfb_i(fb_col[1]),
-    .ctl_one_hot_i(ctl_one_hot_i[7:4]),
+    .ctl_one_hot_i(ctl_one_hot_i[9:5]),
     .clk_o(fb_col[2])
   );
 
@@ -1468,7 +1496,7 @@ module bsg_rp_clk_gen_osc_v3
     .clkgate_i(fb_gated),
     .clkdly_i(fb_dly),
     .clkfb_i(fb_col[2]),
-    .ctl_one_hot_i(ctl_one_hot_i[11:8]),
+    .ctl_one_hot_i(ctl_one_hot_i[14:10]),
     .clk_o(fb_col[3])
   );
 
@@ -1480,8 +1508,20 @@ module bsg_rp_clk_gen_osc_v3
     .clkgate_i(fb_gated),
     .clkdly_i(fb_dly),
     .clkfb_i(fb_col[3]),
-    .ctl_one_hot_i(ctl_one_hot_i[15:12]),
+    .ctl_one_hot_i(ctl_one_hot_i[19:15]),
     .clk_o(fb_col[4])
+  );
+
+
+  bsg_rp_clk_gen_osc_v3_col
+  col_4_BSG_DONT_TOUCH
+  (
+    .async_reset_i(async_reset_i),
+    .clkgate_i(fb_gated),
+    .clkdly_i(fb_dly),
+    .clkfb_i(fb_col[4]),
+    .ctl_one_hot_i(ctl_one_hot_i[24:20]),
+    .clk_o(fb_col[5])
   );
 
 
@@ -1489,7 +1529,7 @@ endmodule
 
 
 
-module bsg_clk_gen_osc_v3_num_taps_p16
+module bsg_clk_gen_osc_v3_num_taps_p25
 (
   async_reset_i,
   clk_o,
@@ -1514,8 +1554,8 @@ module bsg_clk_gen_osc_v3_num_taps_p16
   input bsg_tag_i_en_;
   output clk_o;
   wire clk_o,trigger_r;
-  wire [3:0] ctl_r;
-  wire [15:0] ctl_one_hot_lo;
+  wire [4:0] ctl_r;
+  wire [24:0] ctl_one_hot_lo;
 
   bsg_tag_client_unsync_width_p1
   btc_clkgate
@@ -1528,7 +1568,7 @@ module bsg_clk_gen_osc_v3_num_taps_p16
   );
 
 
-  bsg_tag_client_unsync_width_p4
+  bsg_tag_client_unsync_width_p5
   btc_ctl
   (
     .data_async_r_o(ctl_r),
@@ -1539,7 +1579,7 @@ module bsg_clk_gen_osc_v3_num_taps_p16
   );
 
 
-  bsg_decode_num_out_p16
+  bsg_decode_num_out_p25
   decode
   (
     .i(ctl_r),
@@ -1927,13 +1967,14 @@ module bsg_rp_dly_line_unit_v3
   clk_o
 );
 
-  input [15:0] ctl_one_hot_i;
+  input [24:0] ctl_one_hot_i;
   input async_reset_i;
   input trigger_i;
   input clk_i;
   output clk_o;
-  wire clk_o,hibit,lobit,fb_inv,gate_en_sync_1_r,gate_en_sync_2_r,fb_gated;
-  wire [4:1] fb_col;
+  wire clk_o,hibit,lobit,trigger0,trigger1,trigger2,trigger3,trigger4,trigger,fb_inv,
+  gate_en_sync_1_r,gate_en_sync_2_r,fb_gated;
+  wire [5:1] fb_col;
 
   sky130_fd_sc_hd__conb_1
   T0
@@ -1943,7 +1984,55 @@ module bsg_rp_dly_line_unit_v3
   );
 
 
-  sky130_fd_sc_hd__clkinv_1
+  sky130_fd_sc_hd__dlygate4sd3_1
+  B1A
+  (
+    .X(trigger0),
+    .A(trigger_i)
+  );
+
+
+  sky130_fd_sc_hd__dlygate4sd3_1
+  B1B
+  (
+    .X(trigger1),
+    .A(trigger0)
+  );
+
+
+  sky130_fd_sc_hd__dlygate4sd3_1
+  B1C
+  (
+    .X(trigger2),
+    .A(trigger1)
+  );
+
+
+  sky130_fd_sc_hd__dlygate4sd3_1
+  B1D
+  (
+    .X(trigger3),
+    .A(trigger2)
+  );
+
+
+  sky130_fd_sc_hd__dlygate4sd3_1
+  B1E
+  (
+    .X(trigger4),
+    .A(trigger3)
+  );
+
+
+  sky130_fd_sc_hd__dlygate4sd3_1
+  B1X
+  (
+    .X(trigger),
+    .A(trigger4)
+  );
+
+
+  sky130_fd_sc_hd__clkinv_4
   I0
   (
     .Y(fb_inv),
@@ -1954,7 +2043,7 @@ module bsg_rp_dly_line_unit_v3
   sky130_fd_sc_hd__dfxtp_1
   S1
   (
-    .D(trigger_i),
+    .D(trigger),
     .CLK(clk_i),
     .Q(gate_en_sync_1_r)
   );
@@ -1985,7 +2074,7 @@ module bsg_rp_dly_line_unit_v3
     .clkgate_i(fb_gated),
     .clkdly_i(fb_inv),
     .clkfb_i(1'b0),
-    .ctl_one_hot_i(ctl_one_hot_i[3:0]),
+    .ctl_one_hot_i(ctl_one_hot_i[4:0]),
     .clk_o(fb_col[1])
   );
 
@@ -1997,7 +2086,7 @@ module bsg_rp_dly_line_unit_v3
     .clkgate_i(fb_gated),
     .clkdly_i(fb_inv),
     .clkfb_i(fb_col[1]),
-    .ctl_one_hot_i(ctl_one_hot_i[7:4]),
+    .ctl_one_hot_i(ctl_one_hot_i[9:5]),
     .clk_o(fb_col[2])
   );
 
@@ -2009,7 +2098,7 @@ module bsg_rp_dly_line_unit_v3
     .clkgate_i(fb_gated),
     .clkdly_i(fb_inv),
     .clkfb_i(fb_col[2]),
-    .ctl_one_hot_i(ctl_one_hot_i[11:8]),
+    .ctl_one_hot_i(ctl_one_hot_i[14:10]),
     .clk_o(fb_col[3])
   );
 
@@ -2021,16 +2110,28 @@ module bsg_rp_dly_line_unit_v3
     .clkgate_i(fb_gated),
     .clkdly_i(fb_inv),
     .clkfb_i(fb_col[3]),
-    .ctl_one_hot_i(ctl_one_hot_i[15:12]),
+    .ctl_one_hot_i(ctl_one_hot_i[19:15]),
     .clk_o(fb_col[4])
   );
 
 
-  sky130_fd_sc_hd__clkbuf_1
+  bsg_rp_clk_gen_osc_v3_col
+  col_4_BSG_DONT_TOUCH
+  (
+    .async_reset_i(async_reset_i),
+    .clkgate_i(fb_gated),
+    .clkdly_i(fb_inv),
+    .clkfb_i(fb_col[4]),
+    .ctl_one_hot_i(ctl_one_hot_i[24:20]),
+    .clk_o(fb_col[5])
+  );
+
+
+  sky130_fd_sc_hd__clkbuf_4
   B0
   (
     .X(clk_o),
-    .A(fb_col[4])
+    .A(fb_col[5])
   );
 
 
@@ -2126,8 +2227,8 @@ module bsg_rp_dly_line_v3
   output clk_o;
   wire clk_o,hibit,lobit,async_reset_neg,trigger_off,trigger_on,counter_en,pause,
   clk_dly,meta,meta_sync,meta_sync_sync,meta_sync_sync_inv;
-  wire [15:0] ctl_r;
-  wire [1:0] n;
+  wire [24:0] ctl_r;
+  wire [2:0] n;
 
   sky130_fd_sc_hd__conb_1
   T0
@@ -2145,7 +2246,7 @@ module bsg_rp_dly_line_v3
   );
 
 
-  sky130_fd_sc_hd__dfstp_1
+  sky130_fd_sc_hd__dfstp_2
   D0
   (
     .Q(trigger_off),
@@ -2155,7 +2256,7 @@ module bsg_rp_dly_line_v3
   );
 
 
-  sky130_fd_sc_hd__dfrtp_1
+  sky130_fd_sc_hd__dfrtp_2
   D1
   (
     .Q(counter_en),
@@ -2165,7 +2266,7 @@ module bsg_rp_dly_line_v3
   );
 
 
-  sky130_fd_sc_hd__dfrtp_1
+  sky130_fd_sc_hd__dfrtp_2
   D2
   (
     .Q(pause),
@@ -2175,7 +2276,7 @@ module bsg_rp_dly_line_v3
   );
 
 
-  sky130_fd_sc_hd__dfrtp_1
+  sky130_fd_sc_hd__dfrtp_2
   D3
   (
     .Q(trigger_on),
@@ -2215,11 +2316,19 @@ module bsg_rp_dly_line_v3
   );
 
 
-  bsg_nonsynth_delay_line
+  sky130_fd_sc_hd__clkbuf_1
+  B1
+  (
+    .X(n[2]),
+    .A(n[1])
+  );
+
+
+  sky130_fd_sc_hd__buf_1
   clk_dly_BSG_DONT_TOUCH
   (
     .o(clk_dly),
-    .i(n[1])
+    .i(n[2])
   );
 
 
@@ -2483,14 +2592,149 @@ module bsg_rp_dly_line_v3
   ctl_15
   (
     .clk_i(clk_i),
+    .async_reset_neg(async_reset_neg),
+    .async_set_neg(hibit),
+    .shift_right(meta_sync_sync_inv),
+    .shift_left(meta_sync_sync),
+    .counter_en(counter_en),
+    .ctl_m1(ctl_r[14]),
+    .ctl_p1(ctl_r[16]),
+    .ctl_o(ctl_r[15])
+  );
+
+
+  bsg_rp_dly_line_ctl_reg
+  ctl_16
+  (
+    .clk_i(clk_i),
+    .async_reset_neg(async_reset_neg),
+    .async_set_neg(hibit),
+    .shift_right(meta_sync_sync_inv),
+    .shift_left(meta_sync_sync),
+    .counter_en(counter_en),
+    .ctl_m1(ctl_r[15]),
+    .ctl_p1(ctl_r[17]),
+    .ctl_o(ctl_r[16])
+  );
+
+
+  bsg_rp_dly_line_ctl_reg
+  ctl_17
+  (
+    .clk_i(clk_i),
+    .async_reset_neg(async_reset_neg),
+    .async_set_neg(hibit),
+    .shift_right(meta_sync_sync_inv),
+    .shift_left(meta_sync_sync),
+    .counter_en(counter_en),
+    .ctl_m1(ctl_r[16]),
+    .ctl_p1(ctl_r[18]),
+    .ctl_o(ctl_r[17])
+  );
+
+
+  bsg_rp_dly_line_ctl_reg
+  ctl_18
+  (
+    .clk_i(clk_i),
+    .async_reset_neg(async_reset_neg),
+    .async_set_neg(hibit),
+    .shift_right(meta_sync_sync_inv),
+    .shift_left(meta_sync_sync),
+    .counter_en(counter_en),
+    .ctl_m1(ctl_r[17]),
+    .ctl_p1(ctl_r[19]),
+    .ctl_o(ctl_r[18])
+  );
+
+
+  bsg_rp_dly_line_ctl_reg
+  ctl_19
+  (
+    .clk_i(clk_i),
+    .async_reset_neg(async_reset_neg),
+    .async_set_neg(hibit),
+    .shift_right(meta_sync_sync_inv),
+    .shift_left(meta_sync_sync),
+    .counter_en(counter_en),
+    .ctl_m1(ctl_r[18]),
+    .ctl_p1(ctl_r[20]),
+    .ctl_o(ctl_r[19])
+  );
+
+
+  bsg_rp_dly_line_ctl_reg
+  ctl_20
+  (
+    .clk_i(clk_i),
+    .async_reset_neg(async_reset_neg),
+    .async_set_neg(hibit),
+    .shift_right(meta_sync_sync_inv),
+    .shift_left(meta_sync_sync),
+    .counter_en(counter_en),
+    .ctl_m1(ctl_r[19]),
+    .ctl_p1(ctl_r[21]),
+    .ctl_o(ctl_r[20])
+  );
+
+
+  bsg_rp_dly_line_ctl_reg
+  ctl_21
+  (
+    .clk_i(clk_i),
+    .async_reset_neg(async_reset_neg),
+    .async_set_neg(hibit),
+    .shift_right(meta_sync_sync_inv),
+    .shift_left(meta_sync_sync),
+    .counter_en(counter_en),
+    .ctl_m1(ctl_r[20]),
+    .ctl_p1(ctl_r[22]),
+    .ctl_o(ctl_r[21])
+  );
+
+
+  bsg_rp_dly_line_ctl_reg
+  ctl_22
+  (
+    .clk_i(clk_i),
+    .async_reset_neg(async_reset_neg),
+    .async_set_neg(hibit),
+    .shift_right(meta_sync_sync_inv),
+    .shift_left(meta_sync_sync),
+    .counter_en(counter_en),
+    .ctl_m1(ctl_r[21]),
+    .ctl_p1(ctl_r[23]),
+    .ctl_o(ctl_r[22])
+  );
+
+
+  bsg_rp_dly_line_ctl_reg
+  ctl_23
+  (
+    .clk_i(clk_i),
+    .async_reset_neg(async_reset_neg),
+    .async_set_neg(hibit),
+    .shift_right(meta_sync_sync_inv),
+    .shift_left(meta_sync_sync),
+    .counter_en(counter_en),
+    .ctl_m1(ctl_r[22]),
+    .ctl_p1(ctl_r[24]),
+    .ctl_o(ctl_r[23])
+  );
+
+
+  bsg_rp_dly_line_ctl_reg
+  ctl_24
+  (
+    .clk_i(clk_i),
     .async_reset_neg(hibit),
     .async_set_neg(async_reset_neg),
     .shift_right(meta_sync_sync_inv),
     .shift_left(meta_sync_sync_inv),
     .counter_en(counter_en),
-    .ctl_m1(ctl_r[14]),
-    .ctl_p1(ctl_r[15]),
-    .ctl_o(ctl_r[15])
+    .ctl_m1(ctl_r[23]),
+    .ctl_p1(ctl_r[24]),
+    .ctl_o(ctl_r[24])
   );
 
 
@@ -2498,7 +2742,7 @@ endmodule
 
 
 
-module bsg_dmc_dly_line_v3_num_taps_p16
+module bsg_dmc_dly_line_v3_num_taps_p25
 (
   clk_i,
   async_reset_i,
@@ -2795,7 +3039,7 @@ module bsg_clk_dly_gen
   wire [2:0] osc_ds_r_lo;
   wire [2:2] oscmux_li;
 
-  bsg_clkbuf_width_p1_strength_p8_harden_p1
+  bsg_clkbuf_width_p1_strength_p4_harden_p1
   ext_clkbuf
   (
     .i(ext_clk_i),
@@ -2811,7 +3055,7 @@ module bsg_clk_dly_gen
   );
 
 
-  bsg_clkbuf_width_p1_strength_p8_harden_p1
+  bsg_clkbuf_width_p1_strength_p4_harden_p1
   tag_clkbuf
   (
     .i(tag_clk_i),
@@ -2954,7 +3198,7 @@ module bsg_clk_dly_gen
   );
 
 
-  bsg_clk_gen_osc_v3_num_taps_p16
+  bsg_clk_gen_osc_v3_num_taps_p25
   osc
   (
     .async_reset_i(osc_async_reset_r_lo[0]),
@@ -2970,7 +3214,7 @@ module bsg_clk_dly_gen
   );
 
 
-  bsg_clkbuf_width_p1_strength_p8_harden_p1
+  bsg_clkbuf_width_p1_strength_p4_harden_p1
   osc_clkbuf
   (
     .i(osc_clk_lo),
@@ -2996,7 +3240,7 @@ module bsg_clk_dly_gen
   );
 
 
-  bsg_clkbuf_width_p1_strength_p8_harden_p1
+  bsg_clkbuf_width_p1_strength_p4_harden_p1
   ds_clkbuf
   (
     .i(ds_clk_lo),
@@ -3013,7 +3257,7 @@ module bsg_clk_dly_gen
   );
 
 
-  bsg_clkbuf_width_p1_strength_p8_harden_p1
+  bsg_clkbuf_width_p1_strength_p4_harden_p1
   gen_clkbuf
   (
     .i(oscmux_lo),
@@ -3021,16 +3265,16 @@ module bsg_clk_dly_gen
   );
 
 
-  bsg_dmc_dly_line_v3_num_taps_p16
+  bsg_dmc_dly_line_v3_num_taps_p25
   dly
   (
-    .clk_i(gen_clk_o),
+    .clk_i(osc_clk_o),
     .async_reset_i(dly_async_reset_r_lo[0]),
     .clk_o(dly_clk_lo)
   );
 
 
-  bsg_clkbuf_width_p1_strength_p8_harden_p1
+  bsg_clkbuf_width_p1_strength_p4_harden_p1
   dly_clkbuf
   (
     .i(dly_clk_lo),
@@ -3047,7 +3291,7 @@ module bsg_clk_dly_gen
   );
 
 
-  bsg_clkbuf_width_p1_strength_p8_harden_p1
+  bsg_clkbuf_width_p1_strength_p4_harden_p1
   mon_clkbuf
   (
     .i(monmux_lo),
@@ -3064,7 +3308,7 @@ module bsg_clk_dly_gen
   );
 
 
-  bsg_clkbuf_width_p1_strength_p8_harden_p1
+  bsg_clkbuf_width_p1_strength_p4_harden_p1
   div_clkbuf
   (
     .i(div_clk_lo),

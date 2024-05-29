@@ -13,7 +13,7 @@ HARD_DMC ?= $(HARD)/bsg_dmc
 
 RP_FILES := bsg_rp_clk_gen_osc_v3.sv bsg_rp_clk_gen_osc_unit_v3.sv bsg_rp_dly_line_v3.sv
 
-all: $(RP_FILES)
+all: sv2v
 
 bsg_chip_pkg.sv: bsg_chip_pkg.py
 	$(PYTHON) $< --gentype=pkg > $@
@@ -60,6 +60,7 @@ $(SV2V_DIR)/tt_um_dpetrisko_ttdll.sv2v.v: $(BSG_SV2V_DIR)/cmd.txt
 	cp $(BSG_SV2V_DIR)/results/$(@F) $@
 
 sv2v: $(SV2V_DIR)/tt_um_dpetrisko_ttdll.sv2v.v
+	sed "s/bsg_nonsynth_delay_line/sky130_fd_sc_hd__buf_1/g" $< > ../v/project.v
 
 clean:
 	rm -rf __pycache__/

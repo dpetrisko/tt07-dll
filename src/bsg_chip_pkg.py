@@ -31,8 +31,8 @@ class BsgChipPkg:
             int(clog2(self.params.tag_max_payload_width[0] + 1)),
             "Length of the max payload width",
         )
-        self.params.osc_num_rows = (4, "Number of rows for oscillator")
-        self.params.osc_num_cols = (4, "Number of cols for oscillator")
+        self.params.osc_num_rows = (5, "Number of rows for oscillator")
+        self.params.osc_num_cols = (5, "Number of cols for oscillator")
         self.params.osc_num_taps = (
             self.params.osc_num_rows[0] * self.params.osc_num_cols[0],
             "Number of taps for oscillator",
@@ -41,10 +41,10 @@ class BsgChipPkg:
             int(clog2(self.params.osc_num_taps[0])),
             "Width of control regs for oscillator",
         )
-        self.params.osc_post_buf = (1, "Length of post oscillator buffer chain")
+        self.params.osc_post_buf = (2, "Length of post oscillator buffer chain")
         self.params.osc_ds_width = (2, "Width of oscillator downsampler")
-        self.params.dly_num_rows = (4, "Number of rows for delay line")
-        self.params.dly_num_cols = (4, "Number of cols for delay line")
+        self.params.dly_num_rows = (5, "Number of rows for delay line")
+        self.params.dly_num_cols = (5, "Number of cols for delay line")
         self.params.dly_num_taps = (
             self.params.dly_num_rows[0] * self.params.dly_num_cols[0],
             "Number of taps for delay line",
@@ -53,7 +53,7 @@ class BsgChipPkg:
             int(clog2(self.params.dly_num_taps[0])),
             "Width of control regs for delay line",
         )
-        self.params.dly_post_buf = (1, "Length of post delay buffer chain")
+        self.params.dly_post_buf = (2, "Length of post delay buffer chain")
         self.params.div_count_width = (8, "Width of the digital period approximater")
 
         ##########################

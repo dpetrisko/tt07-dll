@@ -45,7 +45,7 @@
 
   `define BSG_CLKBUF(clk_mp) \
     wire ``clk_mp``_clk_buf_lo;                             \
-    bsg_clkbuf #(.width_p(1), .strength_p(8), .harden_p(1)) \
+    bsg_clkbuf #(.width_p(1), .strength_p(4), .harden_p(1)) \
      ``clk_mp``_clkbuf                                      \
       (.i(``clk_mp``_clk_lo), .o(``clk_mp``_clk_buf_lo))
 

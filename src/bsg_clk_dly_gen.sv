@@ -119,7 +119,7 @@ module bsg_clk_dly_gen
   bsg_dmc_dly_line_v3
    #(.num_taps_p(dly_num_taps_gp))
    dly
-    (.clk_i(gen_clk_buf_lo)
+    (.clk_i(osc_clk_buf_lo)
      ,.async_reset_i(dly_async_reset_r_lo)
      ,.clk_o(dly_clk_lo)
      );
