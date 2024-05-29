@@ -18,8 +18,8 @@ all: $(SRC_DIR)/user_config.tcl
 		--harden
 	cp ./runs/wokwi/final/gds/*.gds gds/
 	cp ./runs/wokwi/final/lef/*.lef lef/
-	cp ./runs/wokwi/final/pnl/*.pnl.v lef/
-	cp ./runs/wokwi/final/nl/*.nl.v lef/
+	cp ./runs/wokwi/final/pnl/*.pnl.v v/
+	cp ./runs/wokwi/final/nl/*.nl.v v/
 
 $(SRC_DIR)/user_config.tcl: $(sv2v_netlist) $(SRC_DIR)/constraints_patched.pnr.sdc $(SRC_DIR)/constraints_patched.signoff.sdc
 	$(TT_TOOL_ROOT)/tt_tool.py \
