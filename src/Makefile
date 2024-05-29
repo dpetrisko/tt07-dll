@@ -60,7 +60,7 @@ $(SV2V_DIR)/tt_um_dpetrisko_ttdll.sv2v.v: $(BSG_SV2V_DIR)/cmd.txt
 	cp $(BSG_SV2V_DIR)/results/$(@F) $@
 
 sv2v: $(SV2V_DIR)/tt_um_dpetrisko_ttdll.sv2v.v
-	sed "s/bsg_nonsynth_delay_line/sky130_fd_sc_hd__buf_1/g" $< > ../v/project.v
+	cp $< project.sv2v.v
 
 clean:
 	rm -rf __pycache__/

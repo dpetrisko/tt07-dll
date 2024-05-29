@@ -556,7 +556,7 @@ module bsg_sync_sync_unit
   );
 
 
-  sky130_fd_sc_hd__buf_1
+  bsg_nonsynth_delay_line
   hard_sync_buf_BSG_DONT_TOUCH
   (
     .o(bsg_SYNC_2_n),
@@ -1414,7 +1414,7 @@ module bsg_rp_clk_gen_osc_v3
   );
 
 
-  sky130_fd_sc_hd__buf_1
+  bsg_nonsynth_delay_line
   fb_dly_BSG_DONT_TOUCH
   (
     .o(fb_dly),
@@ -2324,7 +2324,7 @@ module bsg_rp_dly_line_v3
   );
 
 
-  sky130_fd_sc_hd__buf_1
+  bsg_nonsynth_delay_line
   clk_dly_BSG_DONT_TOUCH
   (
     .o(clk_dly),
