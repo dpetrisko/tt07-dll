@@ -1,9 +1,7 @@
 # Setup environment
-TOP := $(PWD)/../..
-include $(TOP)/Makefile.common
-
-SRC_DIR = $(PWD)/../src
-TEST_DIR = $(PWD)/../test
+TOP ?= $(shell git rev-parse --show-toplevel)
+TT_ROOT := $(TOP)/..
+include $(TT_ROOT)/Makefile.common
 
 PYTHON ?= python
 
@@ -39,27 +37,27 @@ bsg_rp_dly_line_v3.sv: basejump_stl/hard/sky_130/bsg_dmc/bsg_rp_dly_line_v3.py b
 		$(shell $(PYTHON) bsg_chip_pkg.py --gentype=param --par=dly_post_buf) \
 		> $@
 
-SYN_DIR ?= syn_build
+ifeq ($(USE_SYNLIG),1)
 
-$(SYN_DIR)/output.syn.v: yosys.tcl $(RP_FILES)
-	mkdir -p $(SYN_DIR)
+$(SV2V_RESULT)/$(TT_NAME).sv2v.v: yosys.tcl $(RP_FILES)
+	mkdir -p $(SV2V_RESULT)
 	cp $< $(@D)
-	cd $(SYN_DIR); \
-		yosys -c $<
+	cd $(SV2V_RESULT); \
+		$(YOSYS) -c $<
 
-synth: $(SYN_DIR)/output.syn.v
+else
 
-SV2V_DIR ?= sv2v_build
-
-$(BSG_SV2V_DIR)/cmd.txt: $(SRC_DIR)/flist.txt $(RP_FILES)
+$(SV2V_RESULT)/cmd.txt: $(SRC_DIR)/flist.txt $(RP_FILES)
+	mkdir -p $(SV2V_RESULT)
 	cat $< | envsubst > $@
 
-$(SV2V_DIR)/tt_um_dpetrisko_ttdll.sv2v.v: $(BSG_SV2V_DIR)/cmd.txt
-	mkdir -p $(SV2V_DIR)
-	$(MAKE) -C $(BSG_SV2V_DIR) clean convert_sv2v DESIGN_NAME=tt_um_dpetrisko_ttdll DESIGN_FILELIST=$<
+$(SV2V_RESULT)/$(TT_NAME).sv2v.v: $(SV2V_RESULT)/cmd.txt
+	$(MAKE) -C $(BSG_SV2V_DIR) clean convert_sv2v DESIGN_NAME=$(TT_NAME) DESIGN_FILELIST=$<
 	cp $(BSG_SV2V_DIR)/results/$(@F) $@
 
-sv2v: $(SV2V_DIR)/tt_um_dpetrisko_ttdll.sv2v.v
+endif
+
+sv2v: $(SV2V_RESULT)/$(TT_NAME).sv2v.v
 	cp $< project.sv2v.v
 
 clean:
@@ -69,7 +67,7 @@ clean:
 	rm -f bsg_rp_clk_gen_osc_v3.sv
 	rm -f bsg_rp_clk_gen_osc_unit_v3.sv
 	rm -f bsg_rp_dly_line_v3.sv
-	rm -rf $(SYN_DIR)
+	rm -rf $(SV2V_RESULT)
 	rm -f check.rpt
 	rm -f output.elab.v
 	rm -f output.map.v
@@ -79,5 +77,4 @@ clean:
 	rm -f stat.rpt
 	rm -f *_patched*
 	rm -f user_config.tcl
-	rm -rf sv2v_build
 
